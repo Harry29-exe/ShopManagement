@@ -7,7 +7,7 @@ class ValidationException(
     val prefix: String? = null
 )
 
-    : Exception(message = "Object of type: ${value::class.java} " +
+    : Exception("Object of type: ${value::class.java} " +
         " with value: $value" +
         " is invalid${reason ?:"."}") {
 

@@ -21,7 +21,6 @@ class UserRepoServiceImpl(
 
     override suspend fun create(command: CreateUser): UserDTO {
         val entity = UserEntity(
-            0,
             command.username,
             passwordEncoder.encode(command.rawPassword),
             command.name,
