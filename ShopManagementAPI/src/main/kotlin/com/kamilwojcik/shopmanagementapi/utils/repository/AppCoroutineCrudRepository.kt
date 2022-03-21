@@ -1,42 +1,43 @@
 package com.kamilwojcik.shopmanagementapi.utils.repository
 
 import kotlinx.coroutines.flow.Flow
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 interface AppCoroutineCrudRepository<T, ID> {
 
-    suspend fun <S : T> save(entity: S): T
+    fun <S : T> save(entity: S): Mono<T>
 
-    fun <S : T> saveAll(entities: Iterable<S>): Flow<S>
+    fun <S : T> saveAll(entities: Iterable<S>): Flux<S>
 
-    fun <S : T> saveAll(entityStream: Flow<S>): Flow<S>
-
-
-    suspend fun findById(id: ID): T?
-
-    suspend fun existsById(id: ID): Boolean
+    fun <S : T> saveAll(entityStream: Flux<S>): Flux<S>
 
 
-    fun findAll(): Flow<T>
+    fun findById(id: ID): Mono<T>
 
-    fun findAllById(ids: Iterable<ID>): Flow<T>
-
-    fun findAllById(ids: Flow<ID>): Flow<T>
+    fun existsById(id: ID): Mono<Boolean>
 
 
-    suspend fun count(): Long
+    fun findAll(): Flux<T>
+
+    fun findAllById(ids: Iterable<ID>): Flux<T>
+
+    fun findAllById(ids: Flux<ID>): Flux<T>
 
 
-    suspend fun deleteById(id: ID): Int
+    fun count(): Mono<Long>
 
-    suspend fun delete(entity: T): Int
 
-    suspend fun deleteAllById(ids: Iterable<ID>): Int
+    fun deleteById(id: ID): Mono<Int>
 
-    suspend fun deleteAll(entities: Iterable<T>): Int
+    fun delete(entity: T): Mono<Int>
 
-    suspend fun <S : T> deleteAll(entityStream: Flow<S>): Int
+    fun deleteAllById(ids: Iterable<ID>): Mono<Int>
 
-    suspend fun deleteAll(): Int
+    fun deleteAll(entities: Iterable<T>): Mono<Int>
+
+    fun <S : T> deleteAll(entityStream: Flux<S>): Mono<Int>
+
+    fun deleteAll(): Mono<Int>
 
 }

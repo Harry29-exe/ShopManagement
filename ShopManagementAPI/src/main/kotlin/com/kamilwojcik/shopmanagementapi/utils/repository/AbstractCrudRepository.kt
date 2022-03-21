@@ -4,13 +4,18 @@ import kotlinx.coroutines.flow.*
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import kotlinx.coroutines.reactive.asFlow
 import kotlinx.coroutines.reactive.awaitFirstOrNull
+import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
+import org.springframework.data.r2dbc.core.insert
 import org.springframework.data.relational.core.query.Criteria.where
 import org.springframework.data.relational.core.query.Query
 import org.springframework.data.relational.core.query.Query.empty
 import org.springframework.data.relational.core.query.Query.query
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
 
 abstract class AbstractCrudRepository<T : Any, ID: Any>(
     protected val template: R2dbcEntityOperations,
@@ -19,76 +24,67 @@ abstract class AbstractCrudRepository<T : Any, ID: Any>(
 
     protected abstract val table: EntityInfo<T>
 
-    override suspend fun <S : T> save(entity: S): T {
+    override fun <S : T> save(entity: S): Mono<T> {
+        return template.insert(entity)
+    }
+
+    override fun <S : T> saveAll(entities: Iterable<S>): Flux<S> = Flux.concat {
+        entities.map {
+            template.insert(it)
+        }
+    }
+
+    override fun <S : T> saveAll(entityStream: Flux<S>): Flux<S> {
+        return Flux
+            .from(entityStream)
+            .concatMap { template.insert(it) }
+    }
+
+    override fun findById(id: ID): Mono<T> {
         return template
-            .insert(entity)
-            .awaitSingle()
+            .selectOne(
+                whereId(id),
+                table.clazz
+            )
     }
 
-    override fun <S : T> saveAll(entities: Iterable<S>): Flow<S> {
-        return entities.asFlow().map {
-            template.insert(it).awaitSingle()
-        }
-    }
-
-    override fun <S : T> saveAll(entityStream: Flow<S>): Flow<S> {
-        return entityStream.map {
-            template.insert(it).awaitSingle()
-        }
-    }
-
-    override suspend fun findById(id: ID): T? {
-        return template.select(
-            whereId(id)
-            , table.clazz)
-            .awaitFirstOrNull()
-    }
-
-    override suspend fun existsById(id: ID): Boolean {
+    override fun existsById(id: ID): Mono<Boolean> {
         return template.exists(
-            whereId(id)
-            , table.clazz)
-            .awaitSingle()
+            whereId(id),
+            table.clazz)
     }
 
-    override fun findAll(): Flow<T> {
-        return template.select(table.clazz)
-            .all()
-            .asFlow()
+    override fun findAll(): Flux<T> {
+        return template.select(table.clazz).all()
     }
 
-    override fun findAllById(ids: Iterable<ID>): Flow<T> {
+    override fun findAllById(ids: Iterable<ID>): Flux<T> {
         return template.select(
             whereIdIn(ids.toCollection(ArrayList()))
             , table.clazz)
-            .asFlow()
     }
 
-    override fun findAllById(ids: Flow<ID>): Flow<T> = flow {
-        val idsList: MutableList<ID> = ArrayList()
-        ids.collect{ idsList.add(it) }
-
-        emitAll(template
-            .select(
-                whereIdIn(idsList)
-                , table.clazz)
-            .asFlow()
-        )
+    override fun findAllById(ids: Flux<ID>): Flux<T> {
+        return ids.collectList()
+            .flatMapMany {
+                template.select(
+                    whereIdIn(it),
+                    table.clazz
+                )
+            }
     }
 
-    override suspend fun count(): Long {
+    override fun count(): Mono<Long> {
         return template
             .count(empty(), table.clazz)
-            .awaitSingle()
     }
 
-    override suspend fun deleteById(id: ID): Int {
+    override fun deleteById(id: ID): Mono<Int> {
         return template
             .delete(whereId(id), table.clazz)
-            .awaitSingle()
     }
 
-    override suspend fun delete(entity: T): Int {
+    override fun delete(entity: T): Mono<Int> {
         val returnedEntity = template
             .delete(entity)
             .awaitSingleOrNull()
@@ -96,19 +92,19 @@ abstract class AbstractCrudRepository<T : Any, ID: Any>(
         return if(returnedEntity != null) 1 else 0
     }
 
-    override suspend fun deleteAllById(ids: Iterable<ID>): Int {
+    override fun deleteAllById(ids: Iterable<ID>): Mono<Int> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteAll(entities: Iterable<T>): Int {
+    override fun deleteAll(entities: Iterable<T>): Mono<Int> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun <S : T> deleteAll(entityStream: Flow<S>): Int {
+    override fun <S : T> deleteAll(entityStream: Flow<S>): Flux<Int> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteAll(): Int {
+    override fun deleteAll(): Mono<Int> {
         TODO("Not yet implemented")
     }
 
