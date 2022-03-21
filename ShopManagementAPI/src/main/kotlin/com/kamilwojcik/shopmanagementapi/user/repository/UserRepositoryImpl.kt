@@ -4,7 +4,6 @@ import com.kamilwojcik.shopmanagementapi.user.domain.UserEntity
 import com.kamilwojcik.shopmanagementapi.utils.repository.AbstractCrudRepository
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations
-import org.springframework.data.r2dbc.core.R2dbcEntityTemplate
 import org.springframework.data.relational.core.query.Criteria.where
 import org.springframework.data.relational.core.query.Query.query
 

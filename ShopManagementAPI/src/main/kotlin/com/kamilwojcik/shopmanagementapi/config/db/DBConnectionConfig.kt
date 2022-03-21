@@ -1,4 +1,4 @@
-package com.kamilwojcik.shopmanagementapi.user.config.db
+package com.kamilwojcik.shopmanagementapi.config.db
 
 import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactory

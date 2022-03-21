@@ -1,4 +1,4 @@
-package com.kamilwojcik.shopmanagementapi.user.config.security
+package com.kamilwojcik.shopmanagementapi.config.security
 
 import com.kamilwojcik.shopmanagementapi.utils.Provider
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

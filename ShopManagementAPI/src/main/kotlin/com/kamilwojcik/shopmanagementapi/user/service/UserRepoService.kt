@@ -1,6 +1,6 @@
 package com.kamilwojcik.shopmanagementapi.user.service
 
-import com.kamilwojcik.shopmanagementapi.user.config.security.PasswordEncoderConfig
+import com.kamilwojcik.shopmanagementapi.config.security.PasswordEncoderConfig
 import com.kamilwojcik.shopmanagementapi.user.dto.UserDTO
 import com.kamilwojcik.shopmanagementapi.user.repository.UserRepository
 import com.kamilwojcik.shopmanagementapi.user.service.commands.CreateUser

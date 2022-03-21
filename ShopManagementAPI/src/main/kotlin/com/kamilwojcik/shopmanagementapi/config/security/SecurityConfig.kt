@@ -1,4 +1,4 @@
-package com.kamilwojcik.shopmanagementapi.user.config.security
+package com.kamilwojcik.shopmanagementapi.config.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
