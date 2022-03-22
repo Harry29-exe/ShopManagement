@@ -2,9 +2,8 @@ package com.wojcikk.shopmanagementapi.user.service
 
 import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.user.dto.UserDTO
-import org.springframework.stereotype.Service
 
-@Service
+
 interface UserRepoService {
 
     fun create(command: CreateUser): UserDTO
@@ -22,7 +21,7 @@ interface UserRepoService {
     fun deleteUser(username: String): Int
 
 
-    class UpdateUserName(val username: String, val newName: String, val newSurname: String)
+    class UpdateUserName(val username: String, val newName: String?, val newSurname: String?)
 
     class UpdateUserPassword(val username: String, val newPassword: String)
 

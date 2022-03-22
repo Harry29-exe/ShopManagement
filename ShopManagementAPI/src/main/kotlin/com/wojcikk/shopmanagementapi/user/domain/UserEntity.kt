@@ -53,7 +53,7 @@ class UserEntity(
         return this
     }
 
-    fun changeRole(role: Role) {
+    fun updateRole(role: Role) {
         this.role = role
     }
 

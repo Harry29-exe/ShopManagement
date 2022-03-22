@@ -28,9 +28,9 @@ fun <T> usernameMatch(username: String, func: () -> T): T {
 
     if (auth.name == username) {
         return func()
-    } else {
-        throw NotAuthorizedException()
     }
+
+    throw NotAuthorizedException()
 }
 
 fun <T> usernameMatchOrHasRole(username: String, vararg roles: Role, func: () -> T): T {
@@ -38,23 +38,32 @@ fun <T> usernameMatchOrHasRole(username: String, vararg roles: Role, func: () ->
     val rolesAsGA = roles.map(Role::toGA)
     if (auth.usernamesMatch(username) || auth.hasAnyRole(rolesAsGA)) {
         return func()
-    } else {
-        throw NotAuthorizedException()
     }
+
+    throw NotAuthorizedException()
+}
+
+fun <T> usernameMatchOrIsAdmin(username: String, func: () -> T): T {
+    val auth = getAuthOrThrow()
+    if (auth.name == username || auth.hasRole(Role.Admin)) {
+        return func()
+    }
+
+    throw NotAuthorizedException()
 }
 
 fun <T> hasRole(vararg roles:Role, func: () -> T): T {
     if (getAuthOrThrow().hasAnyRole(roles.map(Role::toGA))) {
         return func()
-    } else {
-        throw NotAuthorizedException()
     }
+
+    throw NotAuthorizedException()
 }
 
 fun <T> isAdmin(func: () -> T): T {
     if (getAuthOrThrow().hasRole(Role.ADMIN.toGA())) {
         return func()
-    } else {
-        throw NotAuthorizedException()
     }
+
+    throw NotAuthorizedException()
 }
