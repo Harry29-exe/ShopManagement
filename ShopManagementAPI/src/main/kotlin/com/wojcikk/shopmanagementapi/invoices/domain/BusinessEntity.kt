@@ -1,5 +1,6 @@
 package com.wojcikk.shopmanagementapi.invoices.domain
 
+import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -11,7 +12,7 @@ class BusinessEntity(
     val entityName: String
 ) {
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
     val nip: String? = null
     @Column
     val email: String? = null
@@ -21,5 +22,8 @@ class BusinessEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0
+
+    @Column(nullable = false, updatable = false, unique = true)
+    val pubId: UUID = UUID.randomUUID()
 
 }

@@ -1,0 +1,8 @@
+package com.wojcikk.shopmanagementapi.products.repository
+
+import com.wojcikk.shopmanagementapi.products.domain.Product
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
+
+@Repository
+interface ProductRepo : JpaRepository<Product, Long>

@@ -1,7 +1,7 @@
 package com.wojcikk.shopmanagementapi.seller.domain
 
-import com.fasterxml.jackson.databind.BeanProperty
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -10,7 +10,11 @@ class Seller(
 ) {
 
     @Id
-    private val privateId: Long = 0
+    @GeneratedValue
+    private val id: Long = 0
+
+    @Column(nullable = false, updatable = false, unique = true)
+    private val pubId: UUID = UUID.randomUUID()
 
     private var isActive: Boolean = true
 
