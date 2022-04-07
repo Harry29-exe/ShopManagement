@@ -7,6 +7,7 @@ enum class Role {
 
     ADMIN,
     SELLER,
+    ACCOUNTANT,
     USER;
 
     fun toGA(): GrantedAuthority {
@@ -18,6 +19,8 @@ enum class Role {
         val Admin: GrantedAuthority = ADMIN.toGA()
         val Seller: GrantedAuthority = SELLER.toGA()
         val User: GrantedAuthority = USER.toGA()
+
+        val ALL = arrayOf(ADMIN, SELLER, ACCOUNTANT, USER)
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.Date
 import java.util.UUID
 
 @RequestMapping("/sales-invoices/")
-interface SalesInvoices {
+interface SalesInvoicesAPI {
 
     @GetMapping("all")
     fun getAllSalesInvoices(): List<SalesInvoiceDTO>
@@ -16,14 +16,14 @@ interface SalesInvoices {
     fun getSalesInvoice(@PathVariable invoicePubId: UUID): SalesInvoiceDTO
 
     @PostMapping
-    fun createSalesInvoice(@RequestBody request: CreatePurchaseInvoiceRequest)
+    fun createSalesInvoice(@RequestBody request: CreateSalesInvoiceRequest)
 
     @PatchMapping("{invoicePubId}/payed")
-    fun updateInvoicePayedStatus(@PathVariable invoicePubId: UUID)
+    fun markInvoiceAsPayed(@PathVariable invoicePubId: UUID): SalesInvoiceDTO
 
 }
 
-class CreatePurchaseInvoiceRequest(
+class CreateSalesInvoiceRequest(
     sellerPubId: UUID,
     businessEntityPubId: UUID,
     issuedAt: Date,

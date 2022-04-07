@@ -1,6 +1,8 @@
 package com.wojcikk.shopmanagementapi.invoices.domain
 
 import com.wojcikk.shopmanagementapi.products.domain.Product
+import com.wojcikk.shopmanagementapi.products.dto.ProductOnInvoiceDTO
+import java.util.Date
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -25,5 +27,8 @@ class SalesInvoiceProduct(
     @Id
     @GeneratedValue
     private val id: Long = 0
+
+    fun toDTO(invoiceIssueDate: Date): ProductOnInvoiceDTO =
+        product.toProductOnInvoice(invoiceIssueDate, quantity)
 
 }

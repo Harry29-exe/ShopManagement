@@ -1,5 +1,6 @@
 package com.wojcikk.shopmanagementapi.products.domain
 
+import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.products.dto.ProductDTO
 import com.wojcikk.shopmanagementapi.products.dto.ProductOnInvoiceDTO
 import com.wojcikk.shopmanagementapi.products.dto.ProductPriceDTO
@@ -91,6 +92,12 @@ class Product(
         return priceHistory
             .map { ProductPriceDTO(it.setDate, it.price) }
             .toCollection(ArrayList())
+    }
+
+    companion object {
+        fun notExistWith(pubId: UUID): ResourceNotExistException {
+            return ResourceNotExistException(Product::class.java, "pubId", pubId)
+        }
     }
 
 }

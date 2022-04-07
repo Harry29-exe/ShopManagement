@@ -1,5 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.domain
 
+import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
+import com.wojcikk.shopmanagementapi.invoices.dto.BusinessEntityDTO
 import java.util.UUID
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -25,5 +27,18 @@ class BusinessEntity(
 
     @Column(nullable = false, updatable = false, unique = true)
     val pubId: UUID = UUID.randomUUID()
+
+    fun toDTO(): BusinessEntityDTO = BusinessEntityDTO(
+        pubId,
+        entityName,
+        nip,
+        email,
+        phoneNumber
+    )
+
+    companion object {
+        fun notExistWith(pubId: UUID): ResourceNotExistException =
+            ResourceNotExistException(BusinessEntity::class.java, "pubId", pubId)
+    }
 
 }
