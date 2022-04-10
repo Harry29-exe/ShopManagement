@@ -9,6 +9,4 @@ import javax.persistence.Entity
 @Repository
 interface SalesInvoiceRepo : JpaRepository<SalesInvoice, Long> {
 
-    fun findByPubId(pubId: UUID): SalesInvoice?
-
 }

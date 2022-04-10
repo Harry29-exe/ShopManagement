@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.UUID
 
 class ProductDTO(
-    val pubId: UUID,
+    val id: Long,
     val name: String,
     val codeName: String,
     val description: String,

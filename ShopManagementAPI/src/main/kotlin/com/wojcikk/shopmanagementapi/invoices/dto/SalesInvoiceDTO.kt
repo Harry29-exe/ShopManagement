@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.UUID
 
 class SalesInvoiceDTO(
-    val pubId: UUID,
+    val id: Long,
     val businessEntity: BusinessEntityDTO,
     val issueDate: Date,
     val isPayed: Boolean,

@@ -13,9 +13,6 @@ class Seller(
     @GeneratedValue
     private val id: Long = 0
 
-    @Column(nullable = false, updatable = false, unique = true)
-    private val pubId: UUID = UUID.randomUUID()
-
     private var isActive: Boolean = true
 
     @OneToOne(fetch = FetchType.EAGER)

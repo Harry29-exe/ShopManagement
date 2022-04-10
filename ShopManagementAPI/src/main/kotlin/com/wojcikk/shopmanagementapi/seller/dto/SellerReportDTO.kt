@@ -5,7 +5,7 @@ import java.util.Date
 import java.util.UUID
 
 class SellerReportDTO(
-    val sellerId: UUID,
+    val sellerId: Long,
     val type: ReportTemporalType,
     val from: Date,
     val to: Date,

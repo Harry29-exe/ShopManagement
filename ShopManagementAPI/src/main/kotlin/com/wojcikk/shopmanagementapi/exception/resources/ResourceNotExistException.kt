@@ -5,6 +5,6 @@ class ResourceNotExistException(
     val fieldName: String,
     val fieldValue: Any
 ) : RuntimeException(
-    message = "Resource: ${resourceClass.simpleName} " +
+    "Resource: ${resourceClass.simpleName} " +
             "with field: $fieldName of value: $fieldValue " +
             "does not exist")

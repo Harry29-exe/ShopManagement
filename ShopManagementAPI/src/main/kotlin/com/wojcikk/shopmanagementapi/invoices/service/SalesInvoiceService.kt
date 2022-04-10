@@ -9,11 +9,11 @@ interface SalesInvoiceService {
 
     fun getAll(): List<SalesInvoiceDTO>
 
-    fun getByPubId(pubId: UUID): SalesInvoiceDTO
+    fun get(id: Long): SalesInvoiceDTO
 
-    fun create(command: CreateSalesInvoice)
+    fun create(command: CreateSalesInvoice): SalesInvoiceDTO
 
-    fun markAsPayed(invoicePubId: UUID): SalesInvoiceDTO
+    fun markAsPayed(invoiceId: Long): SalesInvoiceDTO
 
 }
 

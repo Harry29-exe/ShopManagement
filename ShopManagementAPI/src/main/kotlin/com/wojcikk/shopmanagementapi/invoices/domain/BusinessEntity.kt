@@ -25,11 +25,8 @@ class BusinessEntity(
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0
 
-    @Column(nullable = false, updatable = false, unique = true)
-    val pubId: UUID = UUID.randomUUID()
-
     fun toDTO(): BusinessEntityDTO = BusinessEntityDTO(
-        pubId,
+        id,
         entityName,
         nip,
         email,

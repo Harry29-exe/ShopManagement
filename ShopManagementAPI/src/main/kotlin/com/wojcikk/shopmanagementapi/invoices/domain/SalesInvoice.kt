@@ -21,7 +21,7 @@ class SalesInvoice(
     @Column(nullable = false)
     private val issueDate: Date,
     @Column(nullable = false)
-    private val payed: Boolean,
+    private var payed: Boolean,
     invoiceProducts: List<ProductWithQuantity>,
     productRepo: ProductRepo
 ) {
@@ -29,9 +29,6 @@ class SalesInvoice(
     @Id
     @GeneratedValue
     private val id: Long = 0
-
-    @Column(nullable = false, updatable = false, unique = true)
-    private val pubId: UUID = UUID.randomUUID()
 
     @OneToMany(mappedBy = "invoice")
     private val products: MutableSet<SalesInvoiceProduct> = HashSet()
@@ -58,8 +55,12 @@ class SalesInvoice(
         }
     }
 
+    fun markAsPayed() {
+        payed = true
+    }
+
     fun toDTO(): SalesInvoiceDTO = SalesInvoiceDTO(
-        pubId,
+        id,
         entity.toDTO(),
         issueDate,
         payed,
@@ -67,8 +68,8 @@ class SalesInvoice(
     )
 
     companion object {
-        fun notExistWith(pubId: UUID): ResourceNotExistException {
-            return ResourceNotExistException(SalesInvoice::class.java, "pubId", pubId)
+        fun notExistWith(id: Long): ResourceNotExistException {
+            return ResourceNotExistException(SalesInvoice::class.java, "id", id)
         }
     }
 

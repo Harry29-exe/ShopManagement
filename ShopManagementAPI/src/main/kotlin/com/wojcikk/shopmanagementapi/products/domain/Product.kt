@@ -35,9 +35,6 @@ class Product(
     @GeneratedValue
     private val id: Long = 0
 
-    @Column(nullable = false, updatable = false, unique = true)
-    private val pubId: UUID = UUID.randomUUID()
-
     @OneToMany(mappedBy = "product",
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
@@ -57,7 +54,7 @@ class Product(
 
     fun toDTO(): ProductDTO {
         return ProductDTO(
-            pubId,
+            id,
             name,
             codeName,
             description,

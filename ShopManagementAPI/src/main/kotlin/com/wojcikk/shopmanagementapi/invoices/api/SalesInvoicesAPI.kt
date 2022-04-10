@@ -12,20 +12,20 @@ interface SalesInvoicesAPI {
     @GetMapping("all")
     fun getAllSalesInvoices(): List<SalesInvoiceDTO>
 
-    @GetMapping("{invoicePubId}")
-    fun getSalesInvoice(@PathVariable invoicePubId: UUID): SalesInvoiceDTO
+    @GetMapping("{invoiceId}")
+    fun getSalesInvoice(@PathVariable invoiceId: Long): SalesInvoiceDTO
 
     @PostMapping
-    fun createSalesInvoice(@RequestBody request: CreateSalesInvoiceRequest)
+    fun createSalesInvoice(@RequestBody request: CreateSalesInvoiceRequest): SalesInvoiceDTO
 
-    @PatchMapping("{invoicePubId}/payed")
-    fun markInvoiceAsPayed(@PathVariable invoicePubId: UUID): SalesInvoiceDTO
+    @PatchMapping("{invoiceId}/payed")
+    fun markInvoiceAsPayed(@PathVariable invoiceId: Long): SalesInvoiceDTO
 
 }
 
 class CreateSalesInvoiceRequest(
-    sellerPubId: UUID,
-    businessEntityPubId: UUID,
-    issuedAt: Date,
-    products: List<ProductWithQuantity>
+    val sellerId: Long,
+    val businessEntityId: Long,
+    val issuedAt: Date,
+    val products: List<ProductWithQuantity>
 )
