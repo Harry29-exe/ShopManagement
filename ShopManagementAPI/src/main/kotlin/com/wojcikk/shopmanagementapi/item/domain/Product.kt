@@ -1,9 +1,9 @@
-package com.wojcikk.shopmanagementapi.products.domain
+package com.wojcikk.shopmanagementapi.item.domain
 
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
-import com.wojcikk.shopmanagementapi.products.dto.ProductDTO
-import com.wojcikk.shopmanagementapi.products.dto.ProductOnInvoiceDTO
-import com.wojcikk.shopmanagementapi.products.dto.ProductPriceDTO
+import com.wojcikk.shopmanagementapi.item.dto.ProductDTO
+import com.wojcikk.shopmanagementapi.item.dto.ProductOnInvoiceDTO
+import com.wojcikk.shopmanagementapi.item.dto.ProductPriceDTO
 import java.math.BigDecimal
 import java.util.*
 import javax.persistence.CascadeType
@@ -21,9 +21,11 @@ import kotlin.collections.HashSet
 class Product(
 
     @Column(nullable = false)
-    private var name: String,
+    private val name: String,
     @Column(nullable = false, unique = true)
     private val codeName: String,
+    @Column(nullable = false)
+    private val taxRate: BigDecimal,
     @Column(nullable = false, length = 400)
     private var description: String,
     @Column(nullable = false)
@@ -33,7 +35,7 @@ class Product(
 
     @Id
     @GeneratedValue
-    private val id: Long = 0
+    val id: Long = 0
 
     @OneToMany(mappedBy = "product",
         cascade = [CascadeType.ALL],
@@ -63,10 +65,12 @@ class Product(
         )
     }
 
-    fun toProductOnInvoice(invoiceIssueDate: Date, quantity: Int): ProductOnInvoiceDTO {
+    fun toProductOnInvoice(invoiceIssueDate: Date, discountPercentage: BigDecimal, quantity: Int): ProductOnInvoiceDTO {
         return ProductOnInvoiceDTO(
             codeName,
             getPriceAt(invoiceIssueDate),
+            taxRate,
+            discountPercentage,
             quantity
         )
     }
@@ -92,8 +96,12 @@ class Product(
     }
 
     companion object {
-        fun notExistWith(pubId: UUID): ResourceNotExistException {
-            return ResourceNotExistException(Product::class.java, "pubId", pubId)
+        fun notExistWith(id: Long): ResourceNotExistException {
+            return ResourceNotExistException(
+                Product::class.java,
+                "id",
+                id
+            )
         }
     }
 

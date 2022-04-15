@@ -5,7 +5,6 @@ import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
 import com.wojcikk.shopmanagementapi.user.dto.UserDTO
 import com.wojcikk.shopmanagementapi.user.repository.UserRepository
-import com.wojcikk.shopmanagementapi.utils.secure.hasRole
 import com.wojcikk.shopmanagementapi.utils.secure.isAdmin
 import com.wojcikk.shopmanagementapi.utils.secure.usernameMatchOrHasRole
 import com.wojcikk.shopmanagementapi.utils.secure.usernameMatchOrIsAdmin
@@ -14,9 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import org.springframework.transaction.TransactionManager
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.transaction.reactive.TransactionContextManager
 
 @Service
 @Transactional

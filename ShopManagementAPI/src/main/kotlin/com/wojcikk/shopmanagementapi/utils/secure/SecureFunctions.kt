@@ -43,6 +43,8 @@ inline fun <T> usernameMatchOrHasRole(username: String, vararg roles: Role, func
     throw NotAuthorizedException()
 }
 
+
+
 inline fun <T> usernameMatchOrIsAdmin(username: String, func: () -> T): T {
     val auth = getAuthOrThrow()
     if (auth.name == username || auth.hasRole(Role.Admin)) {
@@ -60,7 +62,7 @@ inline fun <T> isAuthenticated(func: () -> T): T {
     throw NotAuthorizedException()
 }
 
-inline fun <T> hasRole(vararg roles:Role, func: () -> T): T {
+inline fun <T> hasAnyRole(vararg roles:Role, func: () -> T): T {
     if (getAuthOrThrow().hasAnyRole(roles.map(Role::toGA))) {
         return func()
     }

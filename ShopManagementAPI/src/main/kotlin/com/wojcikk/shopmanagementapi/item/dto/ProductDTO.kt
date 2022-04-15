@@ -1,8 +1,7 @@
-package com.wojcikk.shopmanagementapi.products.dto
+package com.wojcikk.shopmanagementapi.item.dto
 
 import java.math.BigDecimal
 import java.util.Date
-import java.util.UUID
 
 class ProductDTO(
     val id: Long,

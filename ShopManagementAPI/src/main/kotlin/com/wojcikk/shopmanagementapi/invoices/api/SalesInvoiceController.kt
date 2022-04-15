@@ -1,15 +1,15 @@
 package com.wojcikk.shopmanagementapi.invoices.api
 
 import com.wojcikk.shopmanagementapi.invoices.dto.SalesInvoiceDTO
-import com.wojcikk.shopmanagementapi.invoices.perimission.SalesInvoicePermissions
+import com.wojcikk.shopmanagementapi.invoices.perimission.SalesInvoices
 import com.wojcikk.shopmanagementapi.invoices.service.CreateSalesInvoice
 import com.wojcikk.shopmanagementapi.invoices.service.SalesInvoiceService
-import com.wojcikk.shopmanagementapi.utils.secure.hasRole
+import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import com.wojcikk.shopmanagementapi.utils.secure.isAuthenticated
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class SalesInvoicesController(
+class SalesInvoiceController(
     private val invoicesService: SalesInvoiceService,
 
 ) : SalesInvoicesAPI {
@@ -25,7 +25,7 @@ class SalesInvoicesController(
     }
 
     override fun createSalesInvoice(request: CreateSalesInvoiceRequest): SalesInvoiceDTO
-    = hasRole(*SalesInvoicePermissions.CREATE) {
+    = hasAnyRole(*SalesInvoices.CREATE) {
         return invoicesService.create(
             CreateSalesInvoice(
                 request.sellerId,

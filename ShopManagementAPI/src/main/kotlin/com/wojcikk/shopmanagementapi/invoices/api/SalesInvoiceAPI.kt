@@ -1,10 +1,9 @@
 package com.wojcikk.shopmanagementapi.invoices.api
 
 import com.wojcikk.shopmanagementapi.invoices.dto.SalesInvoiceDTO
-import com.wojcikk.shopmanagementapi.products.value.ProductWithQuantity
+import com.wojcikk.shopmanagementapi.item.value.NewInvoiceItem
 import org.springframework.web.bind.annotation.*
 import java.util.Date
-import java.util.UUID
 
 @RequestMapping("/sales-invoices/")
 interface SalesInvoicesAPI {
@@ -27,5 +26,5 @@ class CreateSalesInvoiceRequest(
     val sellerId: Long,
     val businessEntityId: Long,
     val issuedAt: Date,
-    val products: List<ProductWithQuantity>
+    val items: List<NewInvoiceItem>
 )

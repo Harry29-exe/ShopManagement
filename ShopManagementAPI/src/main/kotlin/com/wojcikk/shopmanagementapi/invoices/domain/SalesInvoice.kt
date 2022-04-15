@@ -2,12 +2,12 @@ package com.wojcikk.shopmanagementapi.invoices.domain
 
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.invoices.dto.SalesInvoiceDTO
-import com.wojcikk.shopmanagementapi.products.domain.Product
-import com.wojcikk.shopmanagementapi.products.value.ProductWithQuantity
-import com.wojcikk.shopmanagementapi.products.repository.ProductRepo
+import com.wojcikk.shopmanagementapi.item.domain.Product
+import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
+import com.wojcikk.shopmanagementapi.item.value.NewInvoiceItem
 import com.wojcikk.shopmanagementapi.seller.domain.Seller
+import org.springframework.data.repository.findByIdOrNull
 import java.util.Date
-import java.util.UUID
 import javax.persistence.*
 
 //todo wrócić do sobótki i invoice'ów
@@ -22,7 +22,7 @@ class SalesInvoice(
     private val issueDate: Date,
     @Column(nullable = false)
     private var payed: Boolean,
-    invoiceProducts: List<ProductWithQuantity>,
+    invoiceItems: List<NewInvoiceItem>,
     productRepo: ProductRepo
 ) {
 
@@ -30,8 +30,15 @@ class SalesInvoice(
     @GeneratedValue
     private val id: Long = 0
 
+    @OneToOne
+    @JoinColumn(name = "correction_id", insertable = false)
+    private var correction: SalesInvoice? = null
+
+    @Column(name = "correction_id")
+    private var correctionId: Long? = null
+
     @OneToMany(mappedBy = "invoice")
-    private val products: MutableSet<SalesInvoiceProduct> = HashSet()
+    private val products: MutableSet<SalesInvoiceItem> = HashSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id", insertable = false)
@@ -42,18 +49,26 @@ class SalesInvoice(
     private lateinit var entity: BusinessEntity
 
     init {
-        for (productInInvoice in invoiceProducts) {
-            val product = productRepo
-                .findByPubId(productInInvoice.productPubId)
-                ?:throw Product.notExistWith(productInInvoice.productPubId)
+        for (invoiceItem in invoiceItems) {
+            if (invoiceItem.productId != null) {
+                val product = productRepo
+                    .findByIdOrNull(invoiceItem.productId)
+                    ?:throw Product.notExistWith(invoiceItem.productId)
 
-            this.products.add(SalesInvoiceProduct(
-                product,
-                productInInvoice.quantity,
-                this
-            ))
+                this.products.add(SalesInvoiceItem(
+                    product,
+                    invoiceItem.quantity,
+                    invoiceItem.discount,
+                    this
+                ))
+            }
+
+
+
         }
     }
+
+    fun createCorrection()
 
     fun markAsPayed() {
         payed = true
@@ -61,6 +76,7 @@ class SalesInvoice(
 
     fun toDTO(): SalesInvoiceDTO = SalesInvoiceDTO(
         id,
+
         entity.toDTO(),
         issueDate,
         payed,
