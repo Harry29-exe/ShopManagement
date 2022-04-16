@@ -41,7 +41,7 @@ class JwtServiceImpl(
         val tokenCookie = ResponseCookie
             .from(TOKEN_COOKIE_NAME, token)
             .sameSite(SameSite.LAX.toString())
-            .httpOnly(false) // todo change for production
+            .httpOnly(true)
             .secure(false) // todo change for production
             .maxAge(EXPIRE_TIME)
             .build()

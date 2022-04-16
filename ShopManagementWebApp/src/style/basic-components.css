@@ -1,0 +1,13 @@
+@tailwind components;
+
+@layer components {
+    .link {
+        @apply text-2xl rounded-md px-2 py-1 my-auto
+        hover:cursor-pointer hover:font-medium
+        hover:bg-black-alpha-200 hover:text-black;
+    }
+
+    .h-stack {
+        @apply flex flex-row content-center;
+    }
+}
