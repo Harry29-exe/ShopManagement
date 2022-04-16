@@ -11,8 +11,46 @@
         @apply flex flex-row content-center items-center;
     }
 
+    .v-stack {
+        @apply flex flex-col justify-center items-center;
+    }
+
     .center {
         @apply flex content-center items-center justify-center;
     }
+
+    .text-input-sm {
+        @apply p-1 m-1 text-xl
+        bg-black-alpha-50 rounded-md border-2 border-bg-400 ;
+    }
+
+    .text-input-md {
+        @apply px-1.5 py-1 m-1.5 text-2xl
+        bg-black-alpha-50 rounded-md border-2 border-bg-400 ;
+    }
+
+    .text-input-lg {
+        @apply p-2 m-2 text-3xl
+        bg-black-alpha-50 rounded-md border-2 border-bg-400;
+    }
+
+    .btn-sm {
+        @apply py-1 px-2 m-1 border-2 text-base
+        bg-bg-200 rounded-md border-bg-400;
+
+    }
+
+    .btn-md {
+        @apply py-1.5 px-3 m-1.5 border-2 text-2xl
+        bg-bg-200 rounded-md border-bg-400
+        hover:bg-bg-300;
+    }
+
+    .btn-lg {
+        @apply py-2 px-4 m-2 border-2 text-3xl
+        bg-bg-200 rounded-md border-bg-400
+        hover:bg-bg-500 hover:border-amber-400;
+    }
+
 
 }

@@ -1,6 +1,6 @@
 import {AbstractStore} from "./AbstractStore";
 import {ApiConfig} from "../apiclient/ApiConfig";
-import {setCookie} from "../utils/cookies";
+import {eraseCookie, setCookie} from "../utils/cookies";
 
 const CsrfTokenLocalCookieName = "Csrf-Cookie-Cache"
 
@@ -43,6 +43,15 @@ export class AuthStore extends AbstractStore<AuthHolder> {
             throw Error()
         })
 
+    }
+
+    public logout() {
+        eraseCookie(CsrfTokenLocalCookieName)
+        this.set(AuthHolder.empty())
+    }
+
+    public isLogged(): boolean {
+        return this.value.loggedIn
     }
 
     public get username(): string {

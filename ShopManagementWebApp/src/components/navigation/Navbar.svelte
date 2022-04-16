@@ -1,6 +1,7 @@
 <script lang="ts">
     import {goto} from "$app/navigation";
     import AccountButton from "./AccountButton.svelte";
+    import {authStore} from "../../stores/AuthStore";
 
     interface PageLink {
         name: string;
@@ -10,6 +11,10 @@
     const pages: PageLink[] = [
         {name: "Home", link: "/"},
         {name: "Sellers", link: "/sellers"}
+    ]
+
+    const loginPages: PageLink[] = [
+        {name: "Login", link: "/login"}
     ]
 
     const onLinkClick = (link: PageLink) => {
@@ -27,6 +32,15 @@
 
     <div class="flex-grow"></div>
 
-    <AccountButton/>
+    {#if authStore.isLogged()}
+        <AccountButton/>
+    {:else}
+        {#each loginPages as page}
+        <div class="link" on:click={() => onLinkClick(page)}>
+            {page.name}
+        </div>
+        {/each}
+    {/if}
+
 </div>
 

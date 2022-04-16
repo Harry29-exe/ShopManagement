@@ -5,24 +5,27 @@
 </script>
 
 <div class="relative">
-    <div class="account-button hover:shadow-lg hover:cursor-pointer">
+    <div class="account-button" on:click={() => open = !open}>
 
         {authStore.username.substring(0,1)}
 
     </div>
 
-    <div class="menu">
-        <div class="menu-btn hover:bg-black-alpha-200 hover:cursor-pointer">first</div>
-        <div class="menu-btn">first</div>
-        <div class="menu-btn">first</div>
+    {#if open}
+        <div class="menu">
+            <div class="menu-btn">first</div>
+            <div class="menu-btn">first</div>
+            <div class="menu-btn" on:click={() => authStore.logout()}>Logout</div>
 
-    </div>
+        </div>
+    {/if}
 </div>
 
 <style>
 
     .account-button {
-        @apply rounded-[100%] w-8 h-8 bg-bg-400 center relative;
+        @apply rounded-[100%] w-8 h-8 bg-bg-400 center relative
+        hover:shadow-dark-sm hover:cursor-pointer;
     }
 
     .menu {
@@ -32,7 +35,7 @@
     }
 
     .menu-btn {
-        @apply w-full text-lg px-2;
+        @apply w-full text-lg px-2 hover:bg-black-alpha-200 hover:cursor-pointer;
     }
 
 </style>
