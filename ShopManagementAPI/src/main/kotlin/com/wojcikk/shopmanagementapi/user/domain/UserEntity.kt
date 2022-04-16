@@ -5,8 +5,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Id
+import javax.persistence.OneToMany
+import javax.persistence.Table
 
 @Entity
+@Table(name = "users")
 class UserEntity(
     username: String,
     name: String,
@@ -21,8 +24,9 @@ class UserEntity(
     @Column(unique = true, nullable = false)
     val username = username
 
-    @Column(unique = true, nullable = false)
-    var role: Role = Role.USER
+    @Column
+    @OneToMany(mappedBy = "user")
+    var roles: MutableSet<UserRole> = HashSet()
         private set
 
     @Column(nullable = false)
@@ -53,8 +57,15 @@ class UserEntity(
         return this
     }
 
-    fun updateRole(role: Role) {
-        this.role = role
+    fun grantRole(role: Role) {
+        if (roles.indexOfFirst { r -> r.role == role } >= 0) {
+            return
+        }
+        roles.add(UserRole(role, this))
+    }
+    
+    fun revokeRole(role: Role) {
+        roles.removeIf { r -> r.role == role }
     }
 
     fun mapToDTO(): UserDTO {

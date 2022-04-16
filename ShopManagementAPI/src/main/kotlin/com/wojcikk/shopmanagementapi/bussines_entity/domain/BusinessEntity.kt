@@ -3,14 +3,12 @@ package com.wojcikk.shopmanagementapi.bussines_entity.domain
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.dto.BusinessEntityDTO
 import java.util.UUID
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
+@Table(name = "business_entities")
 class BusinessEntity(
+    @Column(name = "name")
     val entityName: String
 ) {
 

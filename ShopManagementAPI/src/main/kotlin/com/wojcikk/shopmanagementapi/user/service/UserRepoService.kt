@@ -16,7 +16,9 @@ interface UserRepoService {
 
     fun updatePassword(command: UpdateUserPassword)
 
-    fun updateRole(command: UpdateUserRole)
+    fun grantRole(username: String, role: Role)
+
+    fun revokeRole(username: String, role: Role)
 
     fun deleteUser(username: String): Int
 

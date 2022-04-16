@@ -7,3 +7,5 @@ DROP TABLE IF EXISTS sales_invoices;
 DROP TABLE IF EXISTS sales_invoice_items;
 DROP TABLE IF EXISTS receipts;
 DROP TABLE IF EXISTS receipt_items;
+
+drop sequence if exists hibernate_sequence;

@@ -4,8 +4,8 @@ import com.wojcikk.shopmanagementapi.invoices.purchase.repository.SalesInvoiceRe
 import com.wojcikk.shopmanagementapi.invoices.sales.domain.SalesInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.SalesInvoicePermissions
-import com.wojcikk.shopmanagementapi.invoices.service.CreateSalesInvoice
-import com.wojcikk.shopmanagementapi.invoices.service.SalesInvoiceService
+import com.wojcikk.shopmanagementapi.invoices.sales.service.CreateSalesInvoice
+import com.wojcikk.shopmanagementapi.invoices.sales.service.SalesInvoiceService
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
 import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.utils.plus

@@ -4,6 +4,9 @@ CREATE TABLE purchase_invoices
     correction_id int8 UNIQUE,
     entity_id     int8                NOT NULL,
     purchaser_id  int8                NOT NULL,
+    issue_date     timestamptz         NOT NULL,
+    is_payed bool NOT NULL ,
+
     FOREIGN KEY (correction_id)
         REFERENCES purchase_invoices (id),
     FOREIGN KEY (entity_id)
@@ -35,6 +38,9 @@ CREATE TABLE sales_invoices
     correction_id int8 UNIQUE,
     seller_id     int8                NOT NULL,
     entity_id     int8                NOT NULL,
+    issue_date     timestamptz         NOT NULL,
+    is_payed bool NOT NULL ,
+
     FOREIGN KEY (correction_id)
         REFERENCES sales_invoices (id),
     FOREIGN KEY (seller_id)
@@ -64,6 +70,8 @@ CREATE TABLE receipts
 (
     id        SERIAL8 PRIMARY KEY NOT NULL,
     seller_id int8                NOT NULL,
+    issue_date timestamptz         NOT NULL,
+
     FOREIGN KEY (seller_id)
         REFERENCES users (id)
 );

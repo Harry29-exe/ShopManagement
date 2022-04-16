@@ -38,7 +38,16 @@ fun hasAnyRole(vararg roles: Role): Wrapper
     if (auth.hasAnyRole(rolesAsGA)) {
         return f
     }
+
     throw NotAuthorizedException()
 } }
 
+val isAdmin
+= object : Wrapper { override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
+    val auth = getAuthOrThrow()
+    if (auth.hasRole(Role.Admin)) {
+        return f
+    }
 
+    throw NotAuthorizedException()
+} }

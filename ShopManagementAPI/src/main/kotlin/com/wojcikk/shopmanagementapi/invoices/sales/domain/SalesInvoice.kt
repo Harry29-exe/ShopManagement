@@ -14,7 +14,7 @@ import javax.persistence.*
 
 //todo wrócić do sobótki i invoice'ów
 @Entity
-@Table(name = "purchase_invoices")
+@Table(name = "sales_invoices")
 class SalesInvoice(
     @Column(nullable = false, updatable = false, name = "entity_id")
     private val entityId: Long,
@@ -22,7 +22,7 @@ class SalesInvoice(
     private val sellerId: Long,
     @Column(nullable = false)
     private val issueDate: Date,
-    @Column(nullable = false)
+    @Column(nullable = false, name = "is_payed")
     private var payed: Boolean,
     invoiceItems: List<NewSalesInvoiceItemDTO>,
     productRepo: ProductRepo
@@ -34,7 +34,7 @@ class SalesInvoice(
     private val id: Long = 0
 
     @OneToOne
-    @JoinColumn(name = "correction_id", insertable = false)
+    @JoinColumn(name = "correction_id", insertable = false, updatable = false)
     private var correction: SalesInvoice? = null
 
     @Column(name = "correction_id")
@@ -52,11 +52,11 @@ class SalesInvoice(
     }.toMutableSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "seller_id", insertable = false)
+    @JoinColumn(name = "seller_id", insertable = false, updatable = false)
     private lateinit var seller: UserEntity
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "entity_id", insertable = false)
+    @JoinColumn(name = "entity_id", insertable = false, updatable = false)
     private lateinit var entity: BusinessEntity
 
     fun createCorrection(

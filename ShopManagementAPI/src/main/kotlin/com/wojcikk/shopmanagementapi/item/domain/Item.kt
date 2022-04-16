@@ -2,7 +2,6 @@ package com.wojcikk.shopmanagementapi.item.domain
 
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.item.dto.ProductDTO
-import com.wojcikk.shopmanagementapi.item.dto.ProductOnInvoiceDTO
 import com.wojcikk.shopmanagementapi.item.dto.ProductPriceDTO
 import java.math.BigDecimal
 import java.util.*
@@ -35,10 +34,10 @@ class Item(
         cascade = [CascadeType.ALL],
         orphanRemoval = true,
     )
-    val priceHistory: MutableSet<Price> = HashSet(1)
+    val priceHistory: MutableSet<ItemPrice> = HashSet(1)
 
     init {
-        val priceInHistory = Price(currentPrice, Date(), this)
+        val priceInHistory = ItemPrice(currentPrice, Date(), this)
         priceHistory.add(priceInHistory)
     }
 
@@ -51,7 +50,7 @@ class Item(
 
     fun updatePrice(price: BigDecimal) {
         currentPrice = price
-        priceHistory.add(Price(price, Date(), this))
+        priceHistory.add(ItemPrice(price, Date(), this))
     }
 
     fun decreaseQuantity(decreaseBy: Long) {
@@ -64,7 +63,7 @@ class Item(
 
     fun getPriceAt(date: Date): BigDecimal {
         val iterator = priceHistory.iterator()
-        var priceAtDate: Price = iterator.next()
+        var priceAtDate: ItemPrice = iterator.next()
 
         for (price in iterator) {
             if (price.setDate.before(date)

@@ -1,4 +1,4 @@
-package com.wojcikk.shopmanagementapi.invoices.service
+package com.wojcikk.shopmanagementapi.invoices.sales.service
 
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO

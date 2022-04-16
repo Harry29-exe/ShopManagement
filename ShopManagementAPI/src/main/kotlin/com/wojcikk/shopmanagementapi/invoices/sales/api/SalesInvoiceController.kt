@@ -3,8 +3,8 @@ package com.wojcikk.shopmanagementapi.invoices.sales.api
 import com.wojcikk.shopmanagementapi.invoices.purchase.api.CreateInvoiceCorrectionRequest
 import com.wojcikk.shopmanagementapi.invoices.sales.SalesInvoicePermissions
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
-import com.wojcikk.shopmanagementapi.invoices.service.CreateSalesInvoice
-import com.wojcikk.shopmanagementapi.invoices.service.SalesInvoiceService
+import com.wojcikk.shopmanagementapi.invoices.sales.service.CreateSalesInvoice
+import com.wojcikk.shopmanagementapi.invoices.sales.service.SalesInvoiceService
 import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import com.wojcikk.shopmanagementapi.utils.secure.isAuthenticated
 import org.springframework.web.bind.annotation.RestController
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class SalesInvoiceController(
     private val invoicesService: SalesInvoiceService,
 
-) : SalesInvoicesAPI {
+    ) : SalesInvoicesAPI {
 
     override fun getAllSalesInvoices(): List<SalesInvoiceDTO>
     = isAuthenticated {
@@ -32,7 +32,7 @@ class SalesInvoiceController(
                 request.sellerId,
                 request.businessEntityId,
                 request.issuedAt,
-                request.products
+                request.items
             )
 
         )

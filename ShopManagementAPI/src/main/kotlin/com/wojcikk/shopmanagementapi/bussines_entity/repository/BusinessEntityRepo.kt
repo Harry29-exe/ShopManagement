@@ -6,9 +6,4 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface BusinessEntityRepo : JpaRepository<BusinessEntity, Long> {
-
-    fun findByPubId(pubId: UUID): BusinessEntity?
-
-
-}
+interface BusinessEntityRepo : JpaRepository<BusinessEntity, Long>

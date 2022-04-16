@@ -8,6 +8,7 @@ import com.wojcikk.shopmanagementapi.user.repository.UserRepository
 import com.wojcikk.shopmanagementapi.utils.secure.isAdmin
 import com.wojcikk.shopmanagementapi.utils.secure.usernameMatchOrHasRole
 import com.wojcikk.shopmanagementapi.utils.secure.usernameMatchOrIsAdmin
+import com.wojcikk.shopmanagementapi.utils.wrap
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -70,12 +71,22 @@ class UserRepoServiceImpl(
             ?: throw NoSuchUserException(command.username)
     })
 
-    override fun updateRole(command: UserRepoService.UpdateUserRole)
-    = isAdmin {
+    override fun grantRole(username: String, role: Role) = wrap(
+        isAdmin
+    ) {
         userRepo
-            .findByUsername(command.username)
-            ?.updateRole(command.newRole)
-            ?: throw NoSuchUserException(command.username)
+            .findByUsername(username)
+            ?.grantRole(role)
+            ?:throw NoSuchUserException(username)
+    }
+
+    override fun revokeRole(username: String, role: Role) = wrap(
+        isAdmin
+    ) {
+        userRepo
+            .findByUsername(username)
+            ?.revokeRole(role)
+            ?:throw NoSuchUserException(username)
     }
 
     override fun deleteUser(username: String): Int
@@ -91,9 +102,7 @@ class UserRepoServiceImpl(
         return User(
             user.username,
             user.passwordHash,
-            listOf(
-                user.role.toGA()
-            )
+            user.roles.map { it.role.toGA() }
         )
     }
 

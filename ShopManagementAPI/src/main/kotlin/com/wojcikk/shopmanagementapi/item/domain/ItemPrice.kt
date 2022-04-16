@@ -11,22 +11,22 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
-@Table(name = "product_prices")
-class Price(
+@Table(name = "item_price_history")
+class ItemPrice(
     @Column(nullable = false)
     val price: BigDecimal,
     @Column(nullable = false)
     val setDate: Date,
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "item_id", nullable = false)
     val item: Item
-) : Comparable<Price> {
+) : Comparable<ItemPrice> {
 
     @Id
     @GeneratedValue
     private val id: Long = 0
 
-    override fun compareTo(other: Price): Int {
+    override fun compareTo(other: ItemPrice): Int {
         return this.setDate.compareTo(other.setDate)
     }
 }
