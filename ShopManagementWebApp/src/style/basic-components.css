@@ -52,5 +52,12 @@
         hover:bg-bg-500 hover:border-amber-400;
     }
 
+    .btn-close {
+        @apply px-2 m-1.5 border-2
+        text-base font-bold
+        bg-bg-200 rounded-md border-bg-400
+        hover:bg-bg-300;
+    }
+
 
 }

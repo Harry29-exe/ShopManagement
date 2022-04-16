@@ -9,14 +9,14 @@ export abstract class AbstractStore<T> implements Readable<T> {
     private readonly _value: T;
 
     protected constructor(value: T) {
-    this._value = value;
-    const {subscribe, set, update} = writable<T>(value);
-    this.sub = subscribe;
-    this.set = set;
-    this.update = () => {
-    update(value => value);
-};
-}
+        this._value = value;
+        const {subscribe, set, update} = writable<T>(value);
+        this.sub = subscribe;
+        this.set = set;
+        this.update = () => {
+            update(value => value);
+        };
+    }
 
     get subscribe() {
         return this.sub;

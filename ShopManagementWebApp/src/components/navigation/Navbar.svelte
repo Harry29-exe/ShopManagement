@@ -23,7 +23,7 @@
 </script>
 
 
-<div class="w-full h-14 bg-bg-200 h-stack py-1 px-4 box-border">
+<div class="w-full h-14 bg-bg-200 h-stack py-1 px-4 box-border shadow-dark-sm">
     {#each pages as page}
         <div class="link" on:click={() => onLinkClick(page)}>
             {page.name}
