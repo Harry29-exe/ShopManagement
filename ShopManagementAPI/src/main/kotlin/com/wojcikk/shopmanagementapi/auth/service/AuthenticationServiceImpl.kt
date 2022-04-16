@@ -22,7 +22,7 @@ class AuthenticationServiceImpl(
 
         if (passwordEncoder.matches(password, user.password)) {
             val userAuth = UsernamePasswordAuthenticationToken(
-                username, password, user.authorities
+                username, user.password, user.authorities
             )
 
             SecurityContextHolder

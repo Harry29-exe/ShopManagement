@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServletResponse
 
 interface JwtService {
 
-    fun addToken(user: User, response: HttpServletResponse)
+    fun appendToken(user: Authentication, response: HttpServletResponse)
 
-    fun refreshToken(token: String, response: HttpServletResponse)
+    fun refreshToken(oldToken: String, csrfToken: String, response: HttpServletResponse)
 
-    fun validateToken(token: String): Authentication
+    fun validateToken(token: String, csrfToken: String): Authentication
 
 }
