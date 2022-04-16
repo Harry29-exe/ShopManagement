@@ -41,7 +41,7 @@ CREATE TABLE business_entities
 CREATE TABLE items
 (
     id                SERIAL8 PRIMARY KEY NOT NULL,
-    code_name         varchar(64)         NOT NULL,
+    code_name         varchar(32)         NOT NULL,
     name              varchar(192)        NOT NULL,
     type              int2                NOT NULL, -- enum
     price             decimal             NOT NULL,

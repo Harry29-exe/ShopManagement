@@ -6,6 +6,7 @@ if [ "$(docker ps -q -f name=${CONTAINER_NAME})" ]; then
   echo "stopping container: ${CONTAINER_NAME}"
   docker container kill ${CONTAINER_NAME}
 fi
+
 # -q quiet, -a all, -f filter
 if [ "$(docker ps -q -a -f name=${CONTAINER_NAME})" ]; then
   echo "removing container: ${CONTAINER_NAME}"
