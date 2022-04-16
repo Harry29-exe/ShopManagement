@@ -6,18 +6,18 @@ const CsrfTokenLocalCookieName = "Csrf-Cookie-Cache"
 
 export class AuthHolder {
     public readonly loggedIn: boolean;
-    public readonly username?: string;
-    public readonly csrfToken?: string;
+    public readonly username: string | null;
+    public readonly csrfToken: string | null;
 
 
-    private constructor(loggedIn: boolean, username?: string, csrfToken?: string) {
+    private constructor(loggedIn: boolean, username: string | null, csrfToken: string | null) {
         this.loggedIn = loggedIn;
         this.username = username;
         this.csrfToken = csrfToken;
     }
 
     public static empty(): AuthHolder {
-        return new AuthHolder(false, undefined, undefined)
+        return new AuthHolder(false, null, null)
     }
 
     public static new(username: string, csrfToken: string): AuthHolder {
@@ -43,6 +43,21 @@ export class AuthStore extends AbstractStore<AuthHolder> {
             throw Error()
         })
 
+    }
+
+    public get username(): string {
+        if (!this.value.username) {
+            return "_"
+        }
+        return this.value.username;
+    }
+
+    public get csrfToken(): string {
+        if(!this.value.csrfToken) {
+            throw new Error();
+        }
+
+        return this.value.csrfToken;
     }
 
     private parseLoginResponse(username: string, loginResponse: Response): AuthHolder {

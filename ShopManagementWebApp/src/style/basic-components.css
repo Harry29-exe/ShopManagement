@@ -8,6 +8,11 @@
     }
 
     .h-stack {
-        @apply flex flex-row content-center;
+        @apply flex flex-row content-center items-center;
     }
+
+    .center {
+        @apply flex content-center items-center justify-center;
+    }
+
 }

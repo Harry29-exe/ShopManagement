@@ -1,5 +1,6 @@
 <script lang="ts">
     import {goto} from "$app/navigation";
+    import AccountButton from "./AccountButton.svelte";
 
     interface PageLink {
         name: string;
@@ -26,6 +27,6 @@
 
     <div class="flex-grow"></div>
 
-    we
+    <AccountButton/>
 </div>
 

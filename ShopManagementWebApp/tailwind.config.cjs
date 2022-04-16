@@ -52,7 +52,11 @@ module.exports = {
       boxShadow: {
         'border-1': '0 0 0px 1px rgba(0, 0, 0 ,0.3)',
         'border-2': '0 0 1px 2px rgba(0, 0, 0 ,0.3)',
-        'border-3': '0 0 1px 3px rgba(0, 0, 0 ,0.3)'
+        'border-3': '0 0 1px 3px rgba(0, 0, 0 ,0.3)',
+
+        'dark-sm': '1px 1px 3px 1px rgba(0,0,0, 0.22)',
+        'dark-md': '1px 1px 3px 2px rgba(0,0,0, 0.25)',
+        'dark-lg': '1px 1px 4px 3px rgba(0,0,0, 0.28)',
       }
     },
   },
