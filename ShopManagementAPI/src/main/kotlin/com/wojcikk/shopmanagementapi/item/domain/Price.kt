@@ -19,7 +19,7 @@ class Price(
     val setDate: Date,
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
-    val product: Product
+    val item: Item
 ) : Comparable<Price> {
 
     @Id

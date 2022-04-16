@@ -7,5 +7,5 @@ class ProductOnInvoiceDTO(
     val priceOnInvoice: BigDecimal,
     val taxRate: BigDecimal,
     val discountPercentage: BigDecimal,
-    val quantity: Int
+    val quantity: Long
 )
