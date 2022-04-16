@@ -1,8 +1,8 @@
 <script lang="ts">
-    import {PopupMsg, popupStore, MsgType} from "../stores/PopupStore";
+    import {AppMessage, popupStore, MsgType} from "../stores/PopupStore";
     import {onDestroy} from "svelte";
 
-    let msg: PopupMsg;
+    let msg: AppMessage;
     const unsubscribe = popupStore.subscribe(value => {
         msg = value;
     })

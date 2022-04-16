@@ -1,6 +1,6 @@
 import {AbstractStore} from "./AbstractStore";
 
-export class PopupMsg{
+export class AppMessage {
     public id: number = Math.random();
     public message: string;
     public msgType: MsgType;
@@ -11,24 +11,24 @@ export class PopupMsg{
         this.msgType = msgType;
     }
 
-    public static error(msg: string): PopupMsg {
-        return new PopupMsg(msg, MsgType.ERROR)
+    public static error(msg: string): AppMessage {
+        return new AppMessage(msg, MsgType.ERROR)
     }
 
-    public static warning(msg: string): PopupMsg {
-        return new PopupMsg(msg, MsgType.WARNING)
+    public static warning(msg: string): AppMessage {
+        return new AppMessage(msg, MsgType.WARNING)
     }
 
-    public static success(msg: string): PopupMsg {
-        return new PopupMsg(msg, MsgType.SUCCESS)
+    public static success(msg: string): AppMessage {
+        return new AppMessage(msg, MsgType.SUCCESS)
     }
 
-    public static info(msg: string): PopupMsg {
-        return new PopupMsg(msg, MsgType.INFO)
+    public static info(msg: string): AppMessage {
+        return new AppMessage(msg, MsgType.INFO)
     }
 
-    public static empty(): PopupMsg {
-        return new PopupMsg("", MsgType.NONE)
+    public static empty(): AppMessage {
+        return new AppMessage("", MsgType.NONE)
     }
 
 }
@@ -41,24 +41,24 @@ export enum MsgType {
     NONE = ""
 }
 
-export class PopupStore extends AbstractStore<PopupMsg> {
+export class PopupStore extends AbstractStore<AppMessage> {
 
-    constructor(value: PopupMsg) {
+    constructor(value: AppMessage) {
         super(value);
     }
 
-    public setNew(msg: PopupMsg) {
+    public setNew(msg: AppMessage) {
         this.set(msg)
     }
 
     public close() {
-        this.set(PopupMsg.empty())
+        this.set(AppMessage.empty())
     }
 
-    public get msg(): PopupMsg {
+    public get msg(): AppMessage {
         return this.value
     }
 
 }
 
-export const popupStore: PopupStore = new PopupStore(PopupMsg.empty())
+export const popupStore: PopupStore = new PopupStore(AppMessage.empty())

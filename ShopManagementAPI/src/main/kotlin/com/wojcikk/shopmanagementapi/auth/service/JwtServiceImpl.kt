@@ -12,10 +12,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.stereotype.Service
 import java.security.SecureRandom
 import java.util.*
 import javax.servlet.http.HttpServletResponse
 
+@Service
 class JwtServiceImpl(
     @Value("\${jwt-key.auth}")
     jwtAuthKey: String,

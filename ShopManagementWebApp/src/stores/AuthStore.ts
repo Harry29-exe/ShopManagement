@@ -1,6 +1,7 @@
 import {AbstractStore} from "./AbstractStore";
 import {ApiConfig} from "../apiclient/ApiConfig";
 import {eraseCookie, setCookie} from "../utils/cookies";
+import {AppMessage} from "./PopupStore";
 
 const CsrfTokenLocalCookieName = "Csrf-Cookie-Cache"
 
@@ -27,20 +28,26 @@ export class AuthHolder {
 
 export class AuthStore extends AbstractStore<AuthHolder> {
 
-    constructor() {
-        super(AuthHolder.empty());
+    constructor(authHolder: AuthHolder) {
+        super(authHolder);
     }
 
-    public login(requestBody: LoginRequest): Promise<AuthHolder> {
-        return  fetch(ApiConfig.ApiAddress, {
-            body: JSON.stringify(requestBody)
+    public login(requestBody: LoginRequest): Promise<AuthHolder | AppMessage> {
+        return  fetch(ApiConfig.ApiAddress + "/login", {
+            body: JSON.stringify(requestBody),
+            method: 'POST',
+            headers: {'Content-Type': "application/json"}
         }).then(response => {
             if (response.ok) {
                 let authHolder = this.parseLoginResponse(requestBody.username, response)
                 this.set(authHolder)
                 return authHolder
             }
-            throw Error()
+            if (response.status === 401 || response.status === 403) {
+                return AppMessage.error("Bad credentials, please try again.");
+            } else {
+                return AppMessage.error("Something went wrong, please try again later.")
+            }
         })
 
     }
@@ -48,25 +55,6 @@ export class AuthStore extends AbstractStore<AuthHolder> {
     public logout() {
         eraseCookie(CsrfTokenLocalCookieName)
         this.set(AuthHolder.empty())
-    }
-
-    public isLogged(): boolean {
-        return this.value.loggedIn
-    }
-
-    public get username(): string {
-        if (!this.value.username) {
-            return "_"
-        }
-        return this.value.username;
-    }
-
-    public get csrfToken(): string {
-        if(!this.value.csrfToken) {
-            throw new Error();
-        }
-
-        return this.value.csrfToken;
     }
 
     private parseLoginResponse(username: string, loginResponse: Response): AuthHolder {
@@ -78,7 +66,9 @@ export class AuthStore extends AbstractStore<AuthHolder> {
         //todo change days to days fetched from server
         setCookie(CsrfTokenLocalCookieName, csrfToken, 5)
 
-        return AuthHolder.new(username, csrfToken)
+        let holder = AuthHolder.new(username, csrfToken);
+        console.log("holder from parse login response", holder)
+        return holder
     }
 
 }
@@ -96,4 +86,4 @@ export class LoginRequest {
     }
 }
 
-export const authStore: AuthStore = new AuthStore()
+export const authStore: AuthStore = new AuthStore(AuthHolder.empty())

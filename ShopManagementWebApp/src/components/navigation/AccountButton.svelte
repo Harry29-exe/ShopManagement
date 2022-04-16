@@ -7,7 +7,7 @@
 <div class="relative">
     <div class="account-button" on:click={() => open = !open}>
 
-        {authStore.username.substring(0,1)}
+        {$authStore.username.substring(0,1)}
 
     </div>
 

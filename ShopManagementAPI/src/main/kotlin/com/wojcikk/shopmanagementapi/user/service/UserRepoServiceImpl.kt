@@ -97,7 +97,7 @@ class UserRepoServiceImpl(
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepo
             .findByUsername(username)
-            ?: throw NoSuchElementException(username)
+            ?: throw NoSuchUserException(username)
 
         return User(
             user.username,

@@ -2,6 +2,7 @@
     import {goto} from "$app/navigation";
     import AccountButton from "./AccountButton.svelte";
     import {authStore} from "../../stores/AuthStore";
+    import {onDestroy} from "svelte";
 
     interface PageLink {
         name: string;
@@ -32,7 +33,7 @@
 
     <div class="flex-grow"></div>
 
-    {#if authStore.isLogged()}
+    {#if $authStore.loggedIn}
         <AccountButton/>
     {:else}
         {#each loginPages as page}

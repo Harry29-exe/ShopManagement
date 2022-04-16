@@ -6,7 +6,7 @@ export abstract class AbstractStore<T> implements Readable<T> {
     // protected update: (update: Updater<T>) => void;
     protected update: () => void;
     protected set: (value: T) => void;
-    private readonly _value: T;
+    private _value: T;
 
     protected constructor(value: T) {
         this._value = value;
@@ -14,7 +14,7 @@ export abstract class AbstractStore<T> implements Readable<T> {
         this.sub = subscribe;
         this.set = set;
         this.update = () => {
-            update(value => value);
+            update(value => this._value = value);
         };
     }
 
