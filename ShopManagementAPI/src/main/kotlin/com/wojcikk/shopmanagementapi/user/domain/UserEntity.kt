@@ -70,7 +70,7 @@ class UserEntity(
 
     fun mapToDTO(): UserDTO {
         return UserDTO(
-            username, name, surname
+            username, name, surname, roles.map { it.role }
         )
     }
 

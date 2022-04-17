@@ -5,7 +5,7 @@
 </script>
 
 <div class="relative">
-    <div class="account-button" on:click={() => open = !open}>
+    <div class="account-button center" on:click={() => open = !open}>
 
         {$authStore.username.substring(0,1)}
 
@@ -24,7 +24,7 @@
 <style>
 
     .account-button {
-        @apply rounded-[100%] w-8 h-8 bg-bg-400 center relative
+        @apply rounded-[100%] w-8 h-8 bg-bg-400 relative
         hover:shadow-dark-sm hover:cursor-pointer;
     }
 

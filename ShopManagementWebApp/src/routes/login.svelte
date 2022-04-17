@@ -1,6 +1,7 @@
 <script lang="ts">
-    import {authStore, LoginRequest} from "../stores/AuthStore";
+    import {authStore} from "../stores/AuthStore";
     import {AppMessage, popupStore} from "../stores/PopupStore";
+    import {LoginRequest} from "../apiclient/LoginClient";
 
     let login: string = ""
     let password: string = ""
