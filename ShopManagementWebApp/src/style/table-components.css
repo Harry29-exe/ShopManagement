@@ -2,4 +2,8 @@
 
 @layer components {
 
+    .table-wrapper {
+        @apply rounded-md border-2 border-bg-400 overflow-hidden shadow-dark-sm;
+    }
+
 }

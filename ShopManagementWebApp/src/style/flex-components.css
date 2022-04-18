@@ -1,0 +1,19 @@
+@tailwind components;
+
+@layer components {
+    .h-stack {
+        @apply flex flex-row content-center items-center;
+    }
+
+    .v-stack {
+        @apply flex flex-col justify-center items-center;
+    }
+
+    .center {
+        @apply flex content-center items-center justify-center;
+    }
+
+    .flex-grid {
+        @apply flex flex-wrap flex-row justify-between align-baseline content-start;
+    }
+}

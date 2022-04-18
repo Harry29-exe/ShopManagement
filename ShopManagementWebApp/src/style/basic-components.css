@@ -7,18 +7,6 @@
         hover:bg-black-alpha-200 hover:text-black;
     }
 
-    .h-stack {
-        @apply flex flex-row content-center items-center;
-    }
-
-    .v-stack {
-        @apply flex flex-col justify-center items-center;
-    }
-
-    .center {
-        @apply flex content-center items-center justify-center;
-    }
-
     .text-input-sm {
         @apply p-1 m-1 text-xl
         bg-black-alpha-50 rounded-md border-2 border-bg-400 ;

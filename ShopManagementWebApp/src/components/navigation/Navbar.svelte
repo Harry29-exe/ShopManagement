@@ -11,7 +11,7 @@
 
     const pages: PageLink[] = [
         {name: "Home", link: "/"},
-        {name: "Purchase invoices", link: "/invoices/purchase"}
+        {name: "Invoices", link: "/invoices"}
     ]
 
     const loginPages: PageLink[] = [
