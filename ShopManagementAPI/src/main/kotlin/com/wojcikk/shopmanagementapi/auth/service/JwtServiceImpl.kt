@@ -1,16 +1,20 @@
 package com.wojcikk.shopmanagementapi.auth.service
 
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.CSRF_ALLOWED_CHARS
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.CSRF_LEN
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.CSRF_TOKEN_CLAIM_NAME
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.CSRF_TOKEN_HEADER_NAME
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.EXPIRE_TIME
+import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.TOKEN_COOKIE_NAME
 import com.wojcikk.shopmanagementapi.exception.authentication.InvalidTokenException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.server.Cookie.SameSite
 import org.springframework.http.ResponseCookie
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import java.security.SecureRandom
@@ -42,9 +46,10 @@ class JwtServiceImpl(
 
         val tokenCookie = ResponseCookie
             .from(TOKEN_COOKIE_NAME, token)
-            .sameSite(SameSite.LAX.toString())
+            .path("/")
+            .sameSite(SameSite.NONE.toString())
             .httpOnly(true)
-            .secure(false) // todo change for production
+            .secure(true) // todo change for production
             .maxAge(EXPIRE_TIME)
             .build()
 
@@ -84,23 +89,6 @@ class JwtServiceImpl(
         }
 
         return strBuilder.toString()
-    }
-
-    companion object {
-        const val TOKEN_COOKIE_NAME = "Auth-Token"
-        const val EXPIRE_TIME: Long = 60*60*24*3
-
-        const val CSRF_TOKEN_HEADER_NAME = "Csrf-Auth-Token"
-        const val CSRF_TOKEN_CLAIM_NAME = "Csrf-Token"
-        const val CSRF_LEN = 16
-        val CSRF_ALLOWED_CHARS = arrayOf(
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
-            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
-            'U', 'V', 'W', 'X', 'Y', 'Z',
-
-            '3', '4',  'A', 'B', 'O', 'T', 'W', 'X', 'K',
-        )
     }
 
 }

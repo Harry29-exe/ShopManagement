@@ -4,10 +4,12 @@ import com.wojcikk.shopmanagementapi.invoices.purchase.api.CreateInvoiceCorrecti
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchaseInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
+import com.wojcikk.shopmanagementapi.utils.FrontendCors
 import org.springframework.web.bind.annotation.*
 import java.util.Date
 
 @RequestMapping("/sales-invoices")
+@FrontendCors
 interface SalesInvoicesAPI {
 
     @GetMapping("all")
