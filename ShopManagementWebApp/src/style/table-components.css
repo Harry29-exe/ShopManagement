@@ -6,4 +6,8 @@
         @apply rounded-md border-2 border-bg-400 overflow-hidden shadow-dark-sm;
     }
 
+    .td > td {
+        @apply border-2 border-bg-400 font-medium p-1;
+    }
+
 }

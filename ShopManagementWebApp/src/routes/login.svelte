@@ -2,6 +2,7 @@
     import {authStore} from "../stores/AuthStore";
     import {AppMessage, popupStore} from "../stores/PopupStore";
     import {LoginRequest} from "../apiclient/LoginClient";
+    import {goto} from "$app/navigation"
 
     let login: string = ""
     let password: string = ""
@@ -12,6 +13,8 @@
             .then(result => {
                 if (result instanceof AppMessage) {
                     popupStore.setNew(result);
+                } else {
+                    goto("/")
                 }
             })
     }

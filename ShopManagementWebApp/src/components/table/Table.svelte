@@ -14,20 +14,20 @@
     </thead>
 
     <tbody>
-    {#each values as row}
-        <tr>
-            {#each row as col}
-                <td>{col}</td>
-            {/each}
-        </tr>
-    {/each}
+    <!--{#each values as row}-->
+    <!--    <tr>-->
+    <!--        {#each row as col}-->
+    <!--            <td>{col}</td>-->
+    <!--        {/each}-->
+    <!--    </tr>-->
+    <!--{/each}-->
+        <slot name="rows"/>
     </tbody>
 
 </table>
 
 <style>
     table {
-        /*border: 2px solid rgba(0,0,0,0.3);*/
         @apply text-lg font-medium w-full;
         border-collapse: collapse;
     }
@@ -47,5 +47,6 @@
     th {
         @apply font-bold;
     }
+
 
 </style>

@@ -9,9 +9,9 @@ export class SalesInvoiceClient {
     private static apiAddress = "/sales-invoices"
 
     public static async getAllSalesInvoices(): Promise<RequestResult<SalesInvoiceDTO[]>> {
-        let response = await Api.fetchAuthorized(this.apiAddress, {})
+        let response = await Api.fetchAuthorized(this.address("/all"), {})
 
-        if (response.ok && response.result) {
+        if (response.ok && response.result && response.result.ok) {
             let body = await response.result.json()
             return RequestResult.ok(body)
         } else {
