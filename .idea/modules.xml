@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/NGINX/NGINX.iml" filepath="$PROJECT_DIR$/NGINX/NGINX.iml" />
       <module fileurl="file://$PROJECT_DIR$/ShopManagementDB/ShopManagementDB.iml" filepath="$PROJECT_DIR$/ShopManagementDB/ShopManagementDB.iml" />
       <module fileurl="file://$PROJECT_DIR$/ShopManagementWebApp/ShopManagementWebApp.iml" filepath="$PROJECT_DIR$/ShopManagementWebApp/ShopManagementWebApp.iml" />
     </modules>
