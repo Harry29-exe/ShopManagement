@@ -41,13 +41,13 @@ class JwtServiceImpl(
             .withSubject(user.name)
             .withClaim(CSRF_TOKEN_CLAIM_NAME, csrfToken)
             .withExpiresAt(expireDate)
-            .withIssuedAt(expireDate)
+            .withIssuedAt(now)
             .sign(authTokenAlgorithm)
 
         val tokenCookie = ResponseCookie
             .from(TOKEN_COOKIE_NAME, token)
             .path("/")
-            .sameSite(SameSite.NONE.toString())
+            .sameSite("None")
             .httpOnly(true)
             .secure(true) // todo change for production
             .maxAge(EXPIRE_TIME)

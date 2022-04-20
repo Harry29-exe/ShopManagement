@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import javax.servlet.http.HttpServletResponse
 
 @RequestMapping("/login")
-@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 interface LoginApi {
 
     @PostMapping
-    @CrossOrigin(origins = ["http://localhost:3000"], allowedHeaders = ["Csrf-Auth-Token"])
     fun login(@RequestBody request: LoginRequest, response: HttpServletResponse)
 
     @PostMapping("/refresh")
