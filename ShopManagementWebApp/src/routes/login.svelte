@@ -20,6 +20,7 @@
     }
 </script>
 
+
 <div class="w-full h-full mt-32 center">
 
     <div class="v-stack md:min-w-[400px] py-5 px-2 bg-bg-200 rounded-md shadow-dark-md mx-3">

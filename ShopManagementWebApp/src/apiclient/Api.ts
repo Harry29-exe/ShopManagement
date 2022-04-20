@@ -1,4 +1,4 @@
-import {getCookieValue} from "../utils/cookies";
+import {getCookieValue, setCookie} from "../utils/cookies";
 import {ApiConfig} from "./ApiConfig";
 import {RequestResult} from "./RequestResult";
 import {AppMessage} from "../stores/PopupStore";
@@ -38,8 +38,13 @@ export class Api {
         return {"Csrf-Auth-Token": header}
     }
 
-    public static eraseCachedCsrToken() {
+    public static eraseCachedCsrfToken() {
         this.cachedCsrfToken = null;
+    }
+
+    public static updateCsrfToken(token: string) {
+        this.cachedCsrfToken = token;
+        setCookie(ApiConfig.CsrfTokenLocalCookieName, token, 5)
     }
 
 }

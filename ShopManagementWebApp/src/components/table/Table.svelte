@@ -1,34 +1,40 @@
 <script lang="ts">
-    export let header: string[];
-    export let values: any[][];
+    import {TableHeader} from "./TableHeader";
 
+    export let header: TableHeader<any> = TableHeader.fromArray([]);
+    export let values: any[] = [];
+
+    function checkIfRowEmpty(rowValue: any) {
+        return rowValue == undefined || rowValue == null? "-": rowValue;
+    }
 </script>
 
+<div class="table-wrapper">
 <table>
     <thead>
     <tr>
-        {#each header as hCol}
-            <th>{hCol}</th>
+        {#each header.columns as column}
+            <th>{column.name}</th>
         {/each}
     </tr>
     </thead>
 
     <tbody>
-    <!--{#each values as row}-->
-    <!--    <tr>-->
-    <!--        {#each row as col}-->
-    <!--            <td>{col}</td>-->
-    <!--        {/each}-->
-    <!--    </tr>-->
-    <!--{/each}-->
-        <slot name="rows"/>
+    {#each values as value, i}
+        <tr on:click={() => header.onRowClick(value)}>
+            {#each header.columns as column}
+                <td>{checkIfRowEmpty(column.getValue(value))}</td>
+            {/each}
+        </tr>
+    {/each}
     </tbody>
 
 </table>
+</div>
 
 <style>
     table {
-        @apply text-lg font-medium w-full;
+        @apply text-lg font-medium w-full ;
         border-collapse: collapse;
     }
 
@@ -46,6 +52,14 @@
 
     th {
         @apply font-bold;
+    }
+
+    tbody tr {
+        @apply hover:bg-black-alpha-100 hover:cursor-pointer
+    }
+
+    .table-wrapper {
+        @apply shadow-dark-md rounded-2xl overflow-hidden;
     }
 
 

@@ -31,7 +31,7 @@ export class LoginClient {
 
     public static logout(): Promise<RequestResult<null>> {
         eraseCookie(ApiConfig.CsrfTokenLocalCookieName);
-        Api.eraseCachedCsrToken();
+        Api.eraseCachedCsrfToken();
         //todo logout
         return Promise.resolve(RequestResult.ok(null))
 
@@ -44,7 +44,7 @@ export class LoginClient {
         }
 
         //todo change days to days fetched from server
-        setCookie(ApiConfig.CsrfTokenLocalCookieName, csrfToken, 5)
+        Api.updateCsrfToken(csrfToken);
 
         let response = new LoginResponse(username, csrfToken)
         return response
