@@ -28,13 +28,18 @@ export class Api {
             return RequestResult.error(NotAuthenticatedMsg)
         }
         let csrfHeader = this.createCsrfHeader(csrfToken)
-        request.headers = {...request.headers,  ...csrfHeader}
+        request.headers = {...request.headers,  ...csrfHeader};
+        request.credentials = "include";
 
         return RequestResult.ok(await fetch(address, request))
     }
 
-    public static createCsrfHeader(header: string): CsrfHeader {
+    private static createCsrfHeader(header: string): CsrfHeader {
         return {"Csrf-Auth-Token": header}
+    }
+
+    public static eraseCachedCsrToken() {
+        this.cachedCsrfToken = null;
     }
 
 }

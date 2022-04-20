@@ -1,6 +1,4 @@
 import {AbstractStore} from "./AbstractStore";
-import {ApiConfig} from "../apiclient/ApiConfig";
-import {eraseCookie, setCookie} from "../utils/cookies";
 import {AppMessage} from "./PopupStore";
 import {LoginClient, LoginRequest} from "../apiclient/LoginClient";
 
@@ -30,18 +28,17 @@ export class AuthStore extends AbstractStore<AuthHolder> {
         super(authHolder);
     }
 
-    public login(requestBody: LoginRequest): Promise<AuthHolder | AppMessage> {
-        return LoginClient.login(requestBody)
-            .then(response => {
-                if (response.ok && response.result != null) {
-                    let holder = AuthHolder.new(response.result.username)
-                    this.set(holder)
-                    return holder
-                } else {
-                    return response.msg
-                }
-            })
+    public async login(requestBody: LoginRequest): Promise<AuthHolder | AppMessage> {
+        let response = await LoginClient.login(requestBody)
 
+        if (response.ok && response.result != null) {
+            let holder = AuthHolder.new(response.result.username)
+            console.log("setting holder")
+            this.set(holder)
+            return holder
+        } else {
+            return response.msg
+        }
     }
 
     public logout() {

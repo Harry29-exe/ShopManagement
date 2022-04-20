@@ -1,22 +1,22 @@
 <script lang="ts">
     import {authStore} from "../stores/AuthStore";
     import {AppMessage, popupStore} from "../stores/PopupStore";
-    import {LoginRequest} from "../apiclient/LoginClient";
+    import {LoginClient, LoginRequest} from "../apiclient/LoginClient";
     import {goto} from "$app/navigation"
 
     let login: string = ""
     let password: string = ""
     let dontLogout: boolean = false
 
-    const onLogin = () => {
-        authStore.login(new LoginRequest(login, password, dontLogout))
-            .then(result => {
-                if (result instanceof AppMessage) {
-                    popupStore.setNew(result);
-                } else {
-                    goto("/")
-                }
-            })
+    const onLogin = async () => {
+        let result = await authStore
+            .login(new LoginRequest(login, password, dontLogout))
+
+        if (result instanceof AppMessage) {
+            popupStore.setNew(result);
+        } else {
+            await goto("/")
+        }
     }
 </script>
 

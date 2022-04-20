@@ -1,5 +1,5 @@
 export const ApiConfig = {
-    ApiAddress: "http://localhost:8080",
+    ApiAddress: "https://localhost:443",
     CsrfHeaderName: "Csrf-Auth-Token",
     CsrfTokenLocalCookieName: "Csrf-Cookie-Cache"
 }

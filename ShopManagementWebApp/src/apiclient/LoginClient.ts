@@ -3,6 +3,7 @@ import {ApiConfig} from "./ApiConfig";
 import {eraseCookie, setCookie} from "../utils/cookies";
 import {AuthHolder} from "../stores/AuthStore";
 import {AppMessage} from "../stores/PopupStore";
+import {Api} from "./Api";
 
 const BadCredentialsErrorMsg =  AppMessage.error("Bad credentials, please try again.")
 const UndefinedLoginErrorMsg = AppMessage.error("Something went wrong, please try again later.")
@@ -13,12 +14,13 @@ export class LoginClient {
         return fetch(ApiConfig.ApiAddress + "/login", {
             body: JSON.stringify(request),
             method: 'POST',
+            credentials: "include",
             headers: {'Content-Type': "application/json"}
         }).then(response => {
             if (response.ok) {
                 let loginResponse = this.parseLoginResponse(request.username, response)
 
-                return RequestResult.ok<LoginResponse>(loginResponse, null)
+                return RequestResult.ok<LoginResponse>(loginResponse)
             } else if (response.status === 401 || response.status === 403) {
                 return RequestResult.error(BadCredentialsErrorMsg)
             } else {
@@ -28,9 +30,10 @@ export class LoginClient {
     }
 
     public static logout(): Promise<RequestResult<null>> {
-        eraseCookie(ApiConfig.CsrfTokenLocalCookieName)
+        eraseCookie(ApiConfig.CsrfTokenLocalCookieName);
+        Api.eraseCachedCsrToken();
         //todo logout
-        return Promise.resolve(RequestResult.ok(null, null))
+        return Promise.resolve(RequestResult.ok(null))
 
     }
 
