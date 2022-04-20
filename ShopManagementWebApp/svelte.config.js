@@ -10,7 +10,14 @@ const config = {
 	}),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		vite: {
+			server: {
+				hmr: {
+					port: 4430 // <--- nginx port
+				}
+			}
+		}
 	}
 };
 
