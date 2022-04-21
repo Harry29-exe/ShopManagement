@@ -1,4 +1,4 @@
-IMG_NAME="shop_management_db"
+IMG_NAME="sm-db"
 CONTAINER_NAME=${IMG_NAME}
 
 # -q quiet, -a all, -f filter

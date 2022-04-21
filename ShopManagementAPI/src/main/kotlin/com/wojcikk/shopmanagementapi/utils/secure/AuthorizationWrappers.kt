@@ -51,3 +51,11 @@ val isAdmin
 
     throw NotAuthorizedException()
 } }
+
+val isAuthenticated
+= object : Wrapper {
+    override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
+        getAuthOrThrow()
+        return f
+    }
+}

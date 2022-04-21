@@ -7,7 +7,7 @@ import java.util.Date
 class PurchaseInvoiceDTO(
     val id: Long,
     val correctionId: Long?,
-    val ordererUsername: String,
+    val purchaserUsername: String,
     val contractor: BusinessEntityDTO,
     val issueData: Date,
     val isPayed: Boolean,

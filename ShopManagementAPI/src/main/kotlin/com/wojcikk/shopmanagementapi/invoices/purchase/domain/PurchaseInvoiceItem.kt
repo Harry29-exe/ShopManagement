@@ -1,4 +1,4 @@
-package com.wojcikk.shopmanagementapi.invoices.sales.domain
+package com.wojcikk.shopmanagementapi.invoices.purchase.domain
 
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceItemDTO
@@ -8,7 +8,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "sales_invoice_items")
-class SalesInvoiceItem(
+class PurchaseInvoiceItem(
     @Column(name = "item_id", nullable = false)
     private val itemId: Long,
     @Column(nullable = false, name = "name_on_invoice", length = 32)

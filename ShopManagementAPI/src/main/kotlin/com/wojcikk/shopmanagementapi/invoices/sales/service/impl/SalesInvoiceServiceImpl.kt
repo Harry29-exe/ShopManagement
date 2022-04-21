@@ -1,9 +1,10 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.service.impl
 
-import com.wojcikk.shopmanagementapi.invoices.purchase.repository.SalesInvoiceRepo
-import com.wojcikk.shopmanagementapi.invoices.sales.domain.SalesInvoice
+import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
+import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.SalesInvoicePermissions
+import com.wojcikk.shopmanagementapi.invoices.sales.domain.SalesInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.service.CreateSalesInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.service.SalesInvoiceService
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
@@ -44,7 +45,7 @@ class SalesInvoiceServiceImpl(
     override fun create(command: CreateSalesInvoice): SalesInvoiceDTO = wrap(
         SalesInvoicePermissions.hasCreateRoles + validate(command)
     ) {
-        val newInvoice = SalesInvoice(
+        val newInvoice = PurchaseInvoice(
             command.businessEntityId,
             command.sellerId,
             command.issuedAt,

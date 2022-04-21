@@ -1,9 +1,8 @@
-package com.wojcikk.shopmanagementapi.invoices.sales.domain
+package com.wojcikk.shopmanagementapi.invoices.purchase.domain
 
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
-import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
-import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoiceItem
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
@@ -16,12 +15,12 @@ import javax.persistence.*
 
 //todo wrócić do sobótki i invoice'ów
 @Entity
-@Table(name = "sales_invoices")
-class SalesInvoice(
+@Table(name = "purchase_invoices")
+class PurchaseInvoice(
     @Column(nullable = false, updatable = false, name = "entity_id")
     private val entityId: Long,
-    @Column(nullable = false, updatable = false, name = "seller_id")
-    private val sellerId: Long,
+    @Column(nullable = false, updatable = false, name = "purchaser_id")
+    private val purchaserId: Long,
     @Column(nullable = false)
     private val issueDate: Date,
     @Column(nullable = false, name = "is_payed")
@@ -54,8 +53,8 @@ class SalesInvoice(
     }.toMutableSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "seller_id", insertable = false, updatable = false)
-    private lateinit var seller: UserEntity
+    @JoinColumn(name = "purchaser_id", insertable = false, updatable = false)
+    private lateinit var purchaser: UserEntity
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id", insertable = false, updatable = false)
@@ -67,7 +66,7 @@ class SalesInvoice(
         productRepo: ProductRepo
     ) {
         val correction = PurchaseInvoice(
-            entityId, sellerId, correctionIssueDate, payed,
+            entityId, purchaserId, correctionIssueDate, payed,
             items, productRepo
         )
     }
@@ -76,7 +75,7 @@ class SalesInvoice(
         payed = true
     }
 
-    fun toDTO(): SalesInvoiceDTO = SalesInvoiceDTO(
+    fun toDTO(): PurchaseInvoiceDTO = PurchaseInvoiceDTO(
         id,
         correctionId,
         entity.toDTO(),
