@@ -9,17 +9,17 @@
     }
 </script>
 
-<div class="shadow-dark-md rounded-2xl overflow-hidden bg-bg-50">
-<table>
-    <thead>
-    <tr>
-        {#each header.columns as column}
-            <th class="border-0 border-b-2 border-black-alpha-800">
-                {column.name}
-            </th>
-        {/each}
-    </tr>
-    </thead>
+<div class="shadow-dark-md rounded-2xl overflow-hidden bg-bg-50 w-full">
+    <table>
+        <thead>
+        <tr>
+            {#each header.columns as column}
+                <th class="border-0 border-b-2 border-black-alpha-800">
+                    {column.name}
+                </th>
+            {/each}
+        </tr>
+        </thead>
 
     <tbody>
     {#each values as value, i}

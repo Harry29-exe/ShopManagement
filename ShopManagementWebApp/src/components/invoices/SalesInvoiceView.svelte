@@ -1,12 +1,12 @@
 <script lang="ts">
-    import {SalesInvoiceDTO} from "../../dto/SalesInvoiceDTO";
+    import {SalesInvoiceDTOs} from "../../dto/SalesInvoiceDTOs";
     import {CompanyInfoDTO} from "../../dto/CompanyInfo";
     import {onMount} from "svelte";
     import {CompanyInfoClient} from "../../apiclient/CompanyInfoClient";
     import SalesInvoiceInfo from "./SalesInvoiceInfo.svelte";
     import ProductTable from "../table/ProductTable.svelte";
 
-    export let invoice: SalesInvoiceDTO;
+    export let invoice: SalesInvoiceDTOs;
     let companyInfo: CompanyInfoDTO;
 
 

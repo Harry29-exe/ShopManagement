@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {AppMessage, popupStore, MsgType} from "../stores/PopupStore";
+    import {AppMessage, MsgType, popupStore} from "../stores/PopupStore";
     import {onDestroy} from "svelte";
 
     let msg: AppMessage;
@@ -12,7 +12,7 @@
 
 {#if msg.msgType !== MsgType.NONE}
     <div class="popup center-fixed">
-        <button class="btn-close fixed right-0 top-1" on:click={() => popupStore.close()}>X</button>
+        <button class="btn-close-sm fixed right-0 top-1" on:click={() => popupStore.close()}>X</button>
 
         <div class="text-xl font-bold py-0.5">{msg.msgType}</div>
         <div class="text-base">{msg.message}</div>

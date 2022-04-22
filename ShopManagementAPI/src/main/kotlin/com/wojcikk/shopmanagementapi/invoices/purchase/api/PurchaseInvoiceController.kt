@@ -34,7 +34,7 @@ class PurchaseInvoiceController(
         )
     }
 
-    override fun createInvoiceCorrection(id: Long, request: CreateInvoiceCorrectionRequest) =
+    override fun createInvoiceCorrection(id: Long, request: CreatePurchaseInvoiceCorrectionRequest) =
         wrap(PurchaseInvoice.canUpdate)
         {
             invoiceService.createCorrection(

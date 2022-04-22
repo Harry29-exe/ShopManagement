@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {SalesInvoiceDTO} from "../../dto/SalesInvoiceDTO";
+    import {SalesInvoiceDTOs} from "../../dto/SalesInvoiceDTOs";
 
-    export let invoice: SalesInvoiceDTO;
+    export let invoice: SalesInvoiceDTOs;
 </script>
 
 <table class="md:w-[70%] w-full">

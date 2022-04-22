@@ -5,18 +5,20 @@
 </script>
 
 
-<div class=" widget-bg v-stack">
+<div class=" widget-lg v-stack">
     <button class="center w-4/5 bg-bg-300 text-3xl btn-lg">+</button>
 
     <div class="table-wrapper">
-    <table>
-        <thead><tr>
-            <th>Business Entity</th>
-            <th>Purchaser</th>
+        <table>
+            <thead>
+            <tr>
+                <th>Business Entity</th>
+                <th>Purchaser</th>
 
-        </tr></thead>
+            </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
             <tr><th>Zdzichu mpi</th><th>Bob Smith</th></tr>
         </tbody>
     </table>

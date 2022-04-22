@@ -1,6 +1,5 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.api
 
-import com.wojcikk.shopmanagementapi.invoices.purchase.api.CreateInvoiceCorrectionRequest
 import com.wojcikk.shopmanagementapi.invoices.sales.domain.SalesInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.service.CreateSalesInvoice
@@ -36,7 +35,7 @@ class SalesInvoiceController(
         )
     }
 
-    override fun createInvoiceCorrection(invoiceId: Long, requestBody: CreateInvoiceCorrectionRequest) =
+    override fun createInvoiceCorrection(invoiceId: Long, requestBody: CreateSalesInvoiceCorrectionRequest) =
         wrap(isAuthenticated) {
             invoicesService.createCorrection(
                 CreateSalesInvoiceCorrection(

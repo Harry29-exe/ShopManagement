@@ -7,8 +7,9 @@
         hover:bg-black-alpha-200 hover:text-black;
     }
 
+    /*===== Inputs =====*/
     .text-input-sm {
-        @apply p-1 m-1 text-xl
+        @apply p-0.5 m-0.5 text-lg
         bg-black-alpha-50 rounded-md border-2 border-bg-400 ;
     }
 
@@ -22,6 +23,23 @@
         bg-black-alpha-50 rounded-md border-2 border-bg-400;
     }
 
+    .input-label {
+        @apply text-xl font-bold;
+    }
+
+    .input-wrapper-sm {
+    }
+
+    .input-wrapper-sm > p {
+        @apply pl-[5px] mb-[-2.5px] text-lg text-left font-medium;
+    }
+
+    .input-wrapper-sm > input {
+        @apply p-1 m-0.5 text-lg w-full
+        bg-black-alpha-50 rounded-md border-2 border-bg-400 ;
+    }
+
+    /*===== Buttons =====*/
     .btn-sm {
         @apply py-1 px-2 m-1 border-2 text-base
         bg-bg-200 rounded-md border-bg-400;
@@ -40,16 +58,54 @@
         hover:bg-bg-300;
     }
 
-    .btn-close {
+    .btn-success-sm {
+        @apply py-1 px-2 m-1 border-2 text-base
+        text-white font-semibold bg-emerald-700
+        rounded-md border-emerald-700
+        hover:border-emerald-900
+        hover:shadow-dark-md;
+
+    }
+
+    .btn-success-md {
+        @apply py-1.5 px-3 m-1.5 border-4 text-xl
+        text-white font-bold bg-emerald-700
+        rounded-md border-emerald-700
+        hover:border-emerald-900
+        hover:shadow-dark-md;
+    }
+
+    .btn-success-lg {
+        @apply py-2 px-4 m-2 border-4 text-3xl
+        text-white font-bold bg-emerald-600
+        rounded-md border-emerald-700
+        hover:bg-emerald-700 hover:shadow-dark-md;
+    }
+
+    .btn-close-sm {
         @apply px-2 m-1.5 border-2
         text-base font-bold
         bg-bg-200 rounded-md border-bg-400
         hover:bg-bg-300;
     }
 
+    .btn-back-md {
+        @apply px-2.5 m-1.5
+        border-2
+        text-3xl font-extrabold
+        bg-bg-200 rounded-md
+        hover:shadow-dark-md
+        border-black-alpha-400
+        hover:bg-bg-300;
+    }
 
+    /*===== Headers =====*/
     .header-md {
-        @apply text-2xl font-bold my-2;
+        @apply text-2xl font-semibold my-4;
+    }
+
+    .header-lg {
+        @apply text-3xl font-bold mb-8;
     }
 
 }

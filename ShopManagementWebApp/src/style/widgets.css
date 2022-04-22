@@ -1,9 +1,26 @@
 @tailwind components;
 
 @layer components {
-    .widget-bg {
-        @apply w-11/12 my-20 mx-auto py-8 rounded-md
-        bg-bg-200;
 
+    .widget-md {
+        @apply my-4 mx-auto py-3 px-4 rounded-md
+        border-2 border-black-alpha-400;
     }
+
+    .widget-lg {
+        @apply my-20 mx-auto py-8 rounded-md
+        bg-bg-200 shadow-dark-md;
+    }
+
+    .card-md {
+        @apply p-4 m-4 bg-bg-50 border-2
+        border-black-alpha-400 rounded-md
+        shadow-dark-sm
+        text-xl font-semibold;
+    }
+
+    .card-hover {
+        @apply hover:bg-bg-200 hover:shadow-dark-md;
+    }
+
 }

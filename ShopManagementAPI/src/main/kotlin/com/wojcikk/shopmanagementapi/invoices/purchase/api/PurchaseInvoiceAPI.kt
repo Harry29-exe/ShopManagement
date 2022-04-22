@@ -20,7 +20,7 @@ interface PurchaseInvoicesAPI {
     @PostMapping("/{id}/correction")
     fun createInvoiceCorrection(
         @PathVariable id: Long,
-        @RequestBody request: CreateInvoiceCorrectionRequest
+        @RequestBody request: CreatePurchaseInvoiceCorrectionRequest
     )
 
     @DeleteMapping("{id}")
@@ -35,7 +35,7 @@ class CreatePurchaseInvoiceRequest(
     val items: List<NewPurchasedItemDTO>
 )
 
-class CreateInvoiceCorrectionRequest(
+class CreatePurchaseInvoiceCorrectionRequest(
     val correctionIssueDate: Date,
     val items: List<NewPurchasedItemDTO>
 )

@@ -16,4 +16,13 @@
     .flex-grid {
         @apply flex flex-wrap flex-row justify-between align-baseline content-start;
     }
+
+    .grid-2 {
+        @apply flex flex-row flex-wrap content-center items-center justify-between
+    }
+
+    .grid-2 > * {
+        @apply w-[45%] my-2;
+    }
+
 }
