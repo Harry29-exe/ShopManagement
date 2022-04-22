@@ -23,7 +23,7 @@ class SalesInvoiceItem(
     private val discountPercentage: BigDecimal,
     @ManyToOne
     @JoinColumn(nullable = false, name = "sales_invoice_id")
-    private val invoice: PurchaseInvoice
+    private val invoice: SalesInvoice
 
 ) {
 

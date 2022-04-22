@@ -8,7 +8,7 @@ import java.util.Date
 class SalesInvoiceDTO(
     val id: Long,
     val correctionId: Long?,
-    val seller:
+    val sellerFullname: String,
     val businessEntity: BusinessEntityDTO,
     val issueDate: Date,
     val isPayed: Boolean,

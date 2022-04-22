@@ -1,6 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.purchase.domain
 
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
 import java.math.BigDecimal
@@ -35,7 +36,7 @@ class PurchaseInvoiceItem(
     @GeneratedValue
     private val id: Long = 0
 
-    fun toDTO(): SalesInvoiceItemDTO = SalesInvoiceItemDTO(
+    fun toDTO(): PurchaseInvoiceItemDTO = PurchaseInvoiceItemDTO(
         itemId,
         nameOnInvoice,
         quantity,

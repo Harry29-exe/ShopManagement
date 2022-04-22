@@ -3,7 +3,6 @@ package com.wojcikk.shopmanagementapi.invoices.sales.domain
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
-import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoiceItem
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
@@ -43,7 +42,7 @@ class SalesInvoice(
     private var correctionId: Long? = null
 
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
-    private val items: MutableSet<PurchaseInvoiceItem> = invoiceItems.map { invoiceItem ->
+    private val items: MutableSet<SalesInvoiceItem> = invoiceItems.map { invoiceItem ->
         val item = productRepo
             .findByIdOrNull(invoiceItem.itemId)
             ?:throw Item.notExistWith(invoiceItem.itemId)
@@ -79,6 +78,7 @@ class SalesInvoice(
     fun toDTO(): SalesInvoiceDTO = SalesInvoiceDTO(
         id,
         correctionId,
+        "${seller.name} ${seller.surname} ${seller.id}",
         entity.toDTO(),
         issueDate,
         payed,
@@ -87,7 +87,7 @@ class SalesInvoice(
 
 
     private fun createInvoiceItem(newItemInfo: NewSalesInvoiceItemDTO, item: Item)
-    = PurchaseInvoiceItem(
+    = SalesInvoiceItem(
         item.id,
         newItemInfo.nameOnInvoice?:item.codeName,
         newItemInfo.quantity,

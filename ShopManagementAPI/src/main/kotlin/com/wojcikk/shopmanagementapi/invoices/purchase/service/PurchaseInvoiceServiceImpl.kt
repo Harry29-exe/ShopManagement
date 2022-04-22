@@ -1,9 +1,11 @@
 package com.wojcikk.shopmanagementapi.invoices.purchase.service
 
+import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.repository.PurchaseInvoiceRepo
 import com.wojcikk.shopmanagementapi.utils.secure.isAuthenticated
 import com.wojcikk.shopmanagementapi.utils.wrap
+import org.springframework.data.repository.findByIdOrNull
 
 class PurchaseInvoiceServiceImpl(
     private val purchaseInvoiceRepo: PurchaseInvoiceRepo
@@ -15,8 +17,11 @@ class PurchaseInvoiceServiceImpl(
             .map { it.toDTO() }
     }
 
-    override fun get(id: Long): PurchaseInvoiceDTO {
-
+    override fun get(id: Long): PurchaseInvoiceDTO
+    = wrap(isAuthenticated) {
+        purchaseInvoiceRepo.findByIdOrNull(id)
+            ?.toDTO()
+            ?: throw PurchaseInvoice.notExistWith(id)
     }
 
     override fun create(command: CreatePurchaseInvoice): PurchaseInvoiceDTO {

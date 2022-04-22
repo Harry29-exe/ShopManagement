@@ -45,7 +45,7 @@ class SalesInvoiceServiceImpl(
     override fun create(command: CreateSalesInvoice): SalesInvoiceDTO = wrap(
         SalesInvoicePermissions.hasCreateRoles + validate(command)
     ) {
-        val newInvoice = PurchaseInvoice(
+        val newInvoice = SalesInvoice(
             command.businessEntityId,
             command.sellerId,
             command.issuedAt,

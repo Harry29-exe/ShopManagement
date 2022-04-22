@@ -78,6 +78,7 @@ class PurchaseInvoice(
     fun toDTO(): PurchaseInvoiceDTO = PurchaseInvoiceDTO(
         id,
         correctionId,
+        "${purchaser.name} ${purchaser.surname} ${purchaser.id}",
         entity.toDTO(),
         issueDate,
         payed,

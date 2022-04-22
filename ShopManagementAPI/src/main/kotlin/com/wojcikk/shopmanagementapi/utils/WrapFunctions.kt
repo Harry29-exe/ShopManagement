@@ -8,11 +8,11 @@ interface Wrapper {
 
 }
 
-fun <V> wrap(wrapper: Wrapper, func: SimpleFun<V>): V {
+inline fun <V> wrap(wrapper: Wrapper, noinline func: SimpleFun<V>): V {
     return wrapper.wrap(func)()
 }
 
-operator fun Wrapper.plus(other: Wrapper): Wrapper
+inline operator fun Wrapper.plus(other: Wrapper): Wrapper
 = object : Wrapper { override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
     return this.wrap(other.wrap ( f ))
 } }
