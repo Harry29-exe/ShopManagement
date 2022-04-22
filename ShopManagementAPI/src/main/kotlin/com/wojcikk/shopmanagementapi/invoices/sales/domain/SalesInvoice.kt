@@ -5,26 +5,24 @@ import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
 import com.wojcikk.shopmanagementapi.item.domain.Item
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
+import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
+import com.wojcikk.shopmanagementapi.utils.Wrapper
+import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import org.springframework.data.repository.findByIdOrNull
 import java.math.BigDecimal
 import java.util.Date
 import javax.persistence.*
 
-//todo wrócić do sobótki i invoice'ów
 @Entity
 @Table(name = "sales_invoices")
 class SalesInvoice(
-    @Column(nullable = false, updatable = false, name = "entity_id")
-    private val entityId: Long,
-    @Column(nullable = false, updatable = false, name = "seller_id")
-    private val sellerId: Long,
-    @Column(nullable = false)
-    private val issueDate: Date,
-    @Column(nullable = false, name = "is_payed")
-    private var payed: Boolean,
+    entityId: Long,
+    sellerId: Long,
+    issueDate: Date,
     invoiceItems: List<NewSalesInvoiceItemDTO>,
     productRepo: ProductRepo
 
@@ -36,10 +34,16 @@ class SalesInvoice(
 
     @OneToOne
     @JoinColumn(name = "correction_id", insertable = false, updatable = false)
-    private var correction: PurchaseInvoice? = null
+    private var correction: SalesInvoice? = null
 
     @Column(name = "correction_id")
     private var correctionId: Long? = null
+
+    @Column(nullable = false, name = "is_payed")
+    private var payed = false
+
+    @Column(nullable = false)
+    private val issueDate = issueDate
 
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
     private val items: MutableSet<SalesInvoiceItem> = invoiceItems.map { invoiceItem ->
@@ -56,19 +60,32 @@ class SalesInvoice(
     @JoinColumn(name = "seller_id", insertable = false, updatable = false)
     private lateinit var seller: UserEntity
 
+    @Column(nullable = false, updatable = false, name = "seller_id")
+    private val sellerId = sellerId
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "entity_id", insertable = false, updatable = false)
     private lateinit var entity: BusinessEntity
 
+    @Column(nullable = false, updatable = false, name = "entity_id")
+    private val entityId = entityId
+
     fun createCorrection(
         correctionIssueDate: Date,
         items: List<NewSalesInvoiceItemDTO>,
-        productRepo: ProductRepo
-    ) {
-        val correction = PurchaseInvoice(
-            entityId, sellerId, correctionIssueDate, payed,
+        productRepo: ProductRepo,
+        salesInvoiceRepo: SalesInvoiceRepo
+    ): SalesInvoice {
+        val correction = SalesInvoice(
+            entityId, sellerId, correctionIssueDate,
             items, productRepo
         )
+        val savedCorrection = salesInvoiceRepo.save(correction)
+
+        this.correctionId = savedCorrection.correctionId
+        salesInvoiceRepo.save(this)
+
+        return correction
     }
 
     fun markAsPayed() {
@@ -98,9 +115,23 @@ class SalesInvoice(
     )
 
     companion object {
+
+        private val CREATE = arrayOf(Role.ACCOUNTANT, Role.ADMIN, Role.SELLER)
+        private val READ = Role.ALL
+        private val UPDATE = arrayOf(Role.ACCOUNTANT, Role.ADMIN)
+        private val DELETE = arrayOf(Role.ACCOUNTANT, Role.ADMIN)
+
         fun notExistWith(id: Long): ResourceNotExistException {
             return ResourceNotExistException(PurchaseInvoice::class.java, "id", id)
         }
+
+        val canCreate: Wrapper = hasAnyRole(*CREATE)
+
+        val canRead: Wrapper = hasAnyRole(*READ)
+
+        val canUpdate = hasAnyRole(*UPDATE)
+
+        val canDelete = hasAnyRole(*DELETE)
     }
 
 }

@@ -29,11 +29,7 @@ class Item(
     var currentPrice = currentPrice
         private set
 
-    @OneToMany(
-        mappedBy = "item",
-        cascade = [CascadeType.ALL],
-        orphanRemoval = true,
-    )
+    @OneToMany(mappedBy = "item", cascade = [CascadeType.ALL], orphanRemoval = true,)
     val priceHistory: MutableSet<ItemPrice> = HashSet(1)
 
     init {

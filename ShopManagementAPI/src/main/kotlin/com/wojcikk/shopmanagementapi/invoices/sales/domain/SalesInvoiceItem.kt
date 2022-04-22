@@ -8,7 +8,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "sales_invoice_items")
-class SalesInvoiceItem(
+internal class SalesInvoiceItem(
     @Column(name = "item_id", nullable = false)
     private val itemId: Long,
     @Column(nullable = false, name = "name_on_invoice", length = 32)

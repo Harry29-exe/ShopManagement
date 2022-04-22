@@ -1,7 +1,6 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.dto
 
 import com.wojcikk.shopmanagementapi.bussines_entity.dto.BusinessEntityDTO
-import com.wojcikk.shopmanagementapi.item.dto.ProductOnInvoiceDTO
 import java.math.BigDecimal
 import java.util.Date
 

@@ -1,7 +1,6 @@
 package com.wojcikk.shopmanagementapi.invoices.purchase.service
 
-import com.wojcikk.shopmanagementapi.exception.validation.ValidationException
-import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchaseInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
 import com.wojcikk.shopmanagementapi.utils.validation.Validated
 import java.util.Date
@@ -24,7 +23,7 @@ class CreatePurchaseInvoice(
     val purchaserId: Long,
     val businessEntityId: Long,
     val issuedAt: Date,
-    val items: List<NewPurchaseInvoiceItemDTO>
+    val items: List<NewPurchasedItemDTO>
 ) : Validated {
 
     override fun isValid(): Boolean {
@@ -35,6 +34,7 @@ class CreatePurchaseInvoice(
 }
 
 class CreatePurchaseInvoiceCorrection(
+    val invoiceId: Long,
     val correctionIssueDate: Date,
-    val items: List<NewPurchaseInvoiceItemDTO>
+    val items: List<NewPurchasedItemDTO>
 )

@@ -1,5 +1,6 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.service
 
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.utils.validation.Validated
@@ -13,6 +14,8 @@ interface SalesInvoiceService {
 
     fun create(command: CreateSalesInvoice): SalesInvoiceDTO
 
+    fun createCorrection(command: CreateSalesInvoiceCorrection): SalesInvoiceDTO
+
     fun markAsPayed(invoiceId: Long): SalesInvoiceDTO
 
 }
@@ -23,7 +26,15 @@ class CreateSalesInvoice(
     val issuedAt: Date,
     val products: List<NewSalesInvoiceItemDTO>
 ) : Validated {
+
     override fun isValid(): Boolean {
         TODO("Not yet implemented")
     }
+
 }
+
+class CreateSalesInvoiceCorrection(
+    val invoiceId: Long,
+    val correctionIssueDate: Date,
+    val items: List<NewSalesInvoiceItemDTO>
+)

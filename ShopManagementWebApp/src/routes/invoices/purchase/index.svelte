@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="w-min-[320px] w-11/12 bg-bg-200 v-stack mt-20 mx-auto py-4 rounded-md">
+<div class=" widget-bg v-stack">
     <button class="center w-4/5 bg-bg-300 text-3xl btn-lg">+</button>
 
     <div class="table-wrapper">

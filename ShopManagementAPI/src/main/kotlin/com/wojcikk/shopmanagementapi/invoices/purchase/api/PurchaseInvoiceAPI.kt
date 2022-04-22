@@ -1,8 +1,8 @@
 package com.wojcikk.shopmanagementapi.invoices.purchase.api
 
-import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
-import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchaseInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import org.springframework.web.bind.annotation.*
 import java.util.Date
 
@@ -33,11 +33,11 @@ class CreatePurchaseInvoiceRequest(
     val purchaserId: Long,
     val businessEntityId: Long,
     val issuedAt: Date,
-    val items: List<NewPurchaseInvoiceItemDTO>
+    val items: List<NewSalesInvoiceItemDTO>
 )
 
 //todo
 class CreateInvoiceCorrectionRequest(
     val correctionIssueDate: Date,
-    val items: List<NewPurchaseInvoiceItemDTO>
+    val items: List<NewSalesInvoiceItemDTO>
 )

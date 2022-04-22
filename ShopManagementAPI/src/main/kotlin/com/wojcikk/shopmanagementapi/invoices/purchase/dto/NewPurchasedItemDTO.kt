@@ -2,7 +2,8 @@ package com.wojcikk.shopmanagementapi.invoices.purchase.dto
 
 import java.math.BigDecimal
 
-class NewPurchaseInvoiceItemDTO(
+class NewPurchasedItemDTO(
+    val nameOnInvoice: String?,
     val itemId: Long,
     val quantity: Long,
     val price: BigDecimal?,

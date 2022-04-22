@@ -3,6 +3,8 @@
     import "../style/basic-components.css"
     import "../style/table-components.css"
     import "../style/flex-components.css"
+    import "../style/widgets.css"
+
 
 
     import Navbar from "../components/navigation/Navbar.svelte";

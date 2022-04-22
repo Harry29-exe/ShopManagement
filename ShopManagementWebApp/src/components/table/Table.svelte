@@ -37,6 +37,7 @@
 </div>
 
 <style>
+
     table {
         @apply text-lg font-medium w-full ;
         border-collapse: collapse;
@@ -53,7 +54,6 @@
     tbody tr {
         @apply hover:bg-black-alpha-100 hover:cursor-pointer
     }
-
 
 
 </style>

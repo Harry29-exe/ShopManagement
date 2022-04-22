@@ -1,0 +1,9 @@
+@tailwind components;
+
+@layer components {
+    .widget-bg {
+        @apply w-11/12 my-20 mx-auto py-8 rounded-md
+        bg-bg-200;
+
+    }
+}

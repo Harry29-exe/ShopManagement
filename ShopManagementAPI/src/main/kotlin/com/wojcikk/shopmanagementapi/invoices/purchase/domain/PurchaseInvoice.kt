@@ -2,9 +2,8 @@ package com.wojcikk.shopmanagementapi.invoices.purchase.domain
 
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
@@ -17,17 +16,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "purchase_invoices")
 class PurchaseInvoice(
-    @Column(nullable = false, updatable = false, name = "entity_id")
-    private val entityId: Long,
-    @Column(nullable = false, updatable = false, name = "purchaser_id")
-    private val purchaserId: Long,
-    @Column(nullable = false)
-    private val issueDate: Date,
-    @Column(nullable = false, name = "is_payed")
-    private var payed: Boolean,
-    invoiceItems: List<NewSalesInvoiceItemDTO>,
+    entityId: Long,
+    purchaserId: Long,
+    issueDate: Date,
+    invoiceItems: List<NewPurchasedItemDTO>,
     productRepo: ProductRepo
-
 ) {
 
     @Id
@@ -41,16 +34,22 @@ class PurchaseInvoice(
     @Column(name = "correction_id")
     private var correctionId: Long? = null
 
+    @Column(nullable = false)
+    val issueDate: Date = issueDate
+
+    @Column(nullable = false, updatable = false, name = "purchaser_id")
+    private val purchaserId = purchaserId
+
+    @Column(nullable = false, updatable = false, name = "entity_id")
+    private val entityId = entityId
+
+    @Column(nullable = false, name = "is_payed")
+    private var payed = false
+
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
-    private val items: MutableSet<PurchaseInvoiceItem> = invoiceItems.map { invoiceItem ->
-        val item = productRepo
-            .findByIdOrNull(invoiceItem.itemId)
-            ?:throw Item.notExistWith(invoiceItem.itemId)
-
-        item.decreaseQuantity(invoiceItem.quantity)
-
-        createInvoiceItem(invoiceItem, item)
-    }.toMutableSet()
+    private val items: MutableSet<PurchaseInvoiceItem> = invoiceItems
+        .map { item -> PurchaseInvoiceItem(this, item, productRepo) }
+        .toMutableSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "purchaser_id", insertable = false, updatable = false)
@@ -62,13 +61,18 @@ class PurchaseInvoice(
 
     fun createCorrection(
         correctionIssueDate: Date,
-        items: List<NewSalesInvoiceItemDTO>,
+        items: List<NewPurchasedItemDTO>,
         productRepo: ProductRepo
-    ) {
+    ): PurchaseInvoice {
+
         val correction = PurchaseInvoice(
-            entityId, purchaserId, correctionIssueDate, payed,
+            entityId, purchaserId, correctionIssueDate,
             items, productRepo
         )
+
+        this.correction = correction
+
+        return correction;
     }
 
     fun markAsPayed() {
@@ -83,18 +87,6 @@ class PurchaseInvoice(
         issueDate,
         payed,
         items.map { item -> item.toDTO() }
-    )
-
-
-    private fun createInvoiceItem(newItemInfo: NewSalesInvoiceItemDTO, item: Item)
-    = PurchaseInvoiceItem(
-        item.id,
-        newItemInfo.nameOnInvoice?:item.codeName,
-        newItemInfo.quantity,
-        newItemInfo.price?:item.getPriceAt(issueDate),
-        newItemInfo.taxRate?:item.taxRate,
-        newItemInfo.discount?: BigDecimal.ZERO,
-        this
     )
 
     companion object {

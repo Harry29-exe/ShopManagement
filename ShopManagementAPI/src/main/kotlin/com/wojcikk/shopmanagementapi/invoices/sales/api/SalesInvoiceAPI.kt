@@ -1,7 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.api
 
 import com.wojcikk.shopmanagementapi.invoices.purchase.api.CreateInvoiceCorrectionRequest
-import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchaseInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.utils.FrontendCors
@@ -41,6 +41,6 @@ class CreateSalesInvoiceRequest(
 
 class CreateSalesInvoiceCorrectionRequest(
     val correctionIssueDate: Date,
-    val items: List<NewPurchaseInvoiceItemDTO>
+    val items: List<NewPurchasedItemDTO>
 )
 
