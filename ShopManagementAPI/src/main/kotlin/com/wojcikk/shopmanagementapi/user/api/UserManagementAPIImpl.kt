@@ -13,36 +13,35 @@ class UserManagementAPIImpl(
     private val userService: UserRepoService
 ) : UserManagementAPI {
 
-    override fun createUser(request: UserManagementAPI.CreateUserRequest): UserDTO
-    = isAdmin {
+    override fun createUser(request: UserManagementAPI.CreateUserRequest): UserDTO = isAdmin {
         userService.create(
             UserRepoService.CreateUser(
-            request.username,
-            request.name,
-            request.surname,
-            request.password
-        ))
+                request.username,
+                request.name,
+                request.surname,
+                request.password
+            )
+        )
     }
 
-    override fun getAll(): List<UserDTO>
-    = isAdmin {
+    override fun getAll(): List<UserDTO> = isAdmin {
         userService.getAll()
     }
 
-    override fun getByUsername(username: String): UserDTO
-    = usernameMatchOrIsAdmin(username) {
+    override fun getByUsername(username: String): UserDTO = usernameMatchOrIsAdmin(username) {
         userService.get(username)
     }
 
-    override fun updateUserDetails(username: String, request: UpdateUserDetails): UserDTO
-    = usernameMatchOrIsAdmin(username) {
-        userService.updateDetails(UpdateUserName(
-            username, request.name, request.surname
-        ))
-    }
+    override fun updateUserDetails(username: String, request: UpdateUserDetails): UserDTO =
+        usernameMatchOrIsAdmin(username) {
+            userService.updateDetails(
+                UpdateUserName(
+                    username, request.name, request.surname
+                )
+            )
+        }
 
-    override fun deleteUser(username: String)
-    = isAdmin {
+    override fun deleteUser(username: String) = isAdmin {
         userService.deleteUser(username)
 
         Unit

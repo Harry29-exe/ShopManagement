@@ -1,8 +1,8 @@
 package com.wojcikk.shopmanagementapi.bussines_entity.domain
 
-import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.dto.BusinessEntityDTO
-import java.util.UUID
+import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -14,8 +14,10 @@ class BusinessEntity(
 
     @Column(unique = true, updatable = false)
     val nip: String? = null
+
     @Column
     val email: String? = null
+
     @Column
     val phoneNumber: String? = null
 

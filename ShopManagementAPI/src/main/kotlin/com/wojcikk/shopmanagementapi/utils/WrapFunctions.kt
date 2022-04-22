@@ -12,10 +12,11 @@ inline fun <V> wrap(wrapper: Wrapper, noinline func: SimpleFun<V>): V {
     return wrapper.wrap(func)()
 }
 
-inline operator fun Wrapper.plus(other: Wrapper): Wrapper
-= object : Wrapper { override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
-    return this.wrap(other.wrap ( f ))
-} }
+inline operator fun Wrapper.plus(other: Wrapper): Wrapper = object : Wrapper {
+    override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
+        return this.wrap(other.wrap(f))
+    }
+}
 
 //fun hasRole(vararg roles: String): WrapFunc
 //        = object : WrapFunc { override fun <V> wrap(f: () -> V): () -> V = {

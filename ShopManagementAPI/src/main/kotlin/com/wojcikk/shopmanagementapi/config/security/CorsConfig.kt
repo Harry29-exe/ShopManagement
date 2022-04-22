@@ -2,7 +2,6 @@ package com.wojcikk.shopmanagementapi.config.security
 
 import com.wojcikk.shopmanagementapi.auth.service.JwtService
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.EnableWebMvc

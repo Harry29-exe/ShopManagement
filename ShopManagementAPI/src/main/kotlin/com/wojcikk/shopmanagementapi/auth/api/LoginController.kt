@@ -2,7 +2,6 @@ package com.wojcikk.shopmanagementapi.auth.api
 
 import com.wojcikk.shopmanagementapi.auth.service.AuthenticationService
 import com.wojcikk.shopmanagementapi.auth.service.JwtService
-import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletResponse
 

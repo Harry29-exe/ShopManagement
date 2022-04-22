@@ -19,7 +19,7 @@ class JwtTokenAuthFilter(
         filterChain: FilterChain
     ) {
         val csrfHeader = request.getHeader(JwtService.CSRF_TOKEN_HEADER_NAME)
-        val jwt = request?.cookies?.firstOrNull { it.name == JwtService.TOKEN_COOKIE_NAME }
+        val jwt = request.cookies?.firstOrNull { it.name == JwtService.TOKEN_COOKIE_NAME }
 
         if (csrfHeader == null || jwt == null) {
             filterChain.doFilter(request, response)

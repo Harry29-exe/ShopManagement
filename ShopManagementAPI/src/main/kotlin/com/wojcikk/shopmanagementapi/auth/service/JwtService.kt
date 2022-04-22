@@ -1,7 +1,6 @@
 package com.wojcikk.shopmanagementapi.auth.service
 
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.User
 import javax.servlet.http.HttpServletResponse
 
 interface JwtService {
@@ -14,7 +13,7 @@ interface JwtService {
 
     companion object {
         const val TOKEN_COOKIE_NAME = "Authentication"
-        const val EXPIRE_TIME: Long = 60*60*24*3
+        const val EXPIRE_TIME: Long = 60 * 60 * 24 * 3
 
         const val CSRF_TOKEN_HEADER_NAME = "Csrf-Auth-Token"
         const val CSRF_TOKEN_CLAIM_NAME = "Csrf-Token"
@@ -25,7 +24,7 @@ interface JwtService {
             'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
             'U', 'V', 'W', 'X', 'Y', 'Z',
 
-            '3', '4',  'A', 'B', 'O', 'T', 'W', 'X', 'K',
+            '3', '4', 'A', 'B', 'O', 'T', 'W', 'X', 'K',
         )
     }
 

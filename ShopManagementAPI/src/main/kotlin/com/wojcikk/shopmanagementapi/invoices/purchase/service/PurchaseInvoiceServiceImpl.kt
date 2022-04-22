@@ -17,15 +17,13 @@ class PurchaseInvoiceServiceImpl(
     private val productRepo: ProductRepo
 ) : PurchaseInvoiceService {
 
-    override fun getAll(): List<PurchaseInvoiceDTO>
-    = wrap(isAuthenticated)
+    override fun getAll(): List<PurchaseInvoiceDTO> = wrap(isAuthenticated)
     {
         purchaseInvoiceRepo.findAll()
             .map { it.toDTO() }
     }
 
-    override fun get(id: Long): PurchaseInvoiceDTO
-    = wrap(isAuthenticated)
+    override fun get(id: Long): PurchaseInvoiceDTO = wrap(isAuthenticated)
     {
         purchaseInvoiceRepo.findByIdOrNull(id)
             ?.toDTO()
@@ -33,8 +31,7 @@ class PurchaseInvoiceServiceImpl(
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    override fun create(command: CreatePurchaseInvoice): PurchaseInvoiceDTO
-    = wrap(isAuthenticated)
+    override fun create(command: CreatePurchaseInvoice): PurchaseInvoiceDTO = wrap(isAuthenticated)
     {
         val newInvoice = PurchaseInvoice(
             command.businessEntityId,
@@ -50,8 +47,7 @@ class PurchaseInvoiceServiceImpl(
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    override fun createCorrection(command: CreatePurchaseInvoiceCorrection): PurchaseInvoiceDTO
-    = wrap(isAuthenticated)
+    override fun createCorrection(command: CreatePurchaseInvoiceCorrection): PurchaseInvoiceDTO = wrap(isAuthenticated)
     {
         val invoice = purchaseInvoiceRepo
             .findByIdOrNull(command.invoiceId)
@@ -63,8 +59,7 @@ class PurchaseInvoiceServiceImpl(
     }
 
     //todo change permission
-    override fun delete(id: Long)
-    = wrap(isAuthenticated) {
+    override fun delete(id: Long) = wrap(isAuthenticated) {
         purchaseInvoiceRepo.deleteById(id)
     }
 }

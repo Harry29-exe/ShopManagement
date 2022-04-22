@@ -13,40 +13,40 @@ class PurchaseInvoiceController(
     val invoiceService: PurchaseInvoiceService
 ) : PurchaseInvoicesAPI {
 
-    override fun getAll(): List<PurchaseInvoiceDTO>
-    = wrap(PurchaseInvoice.canRead) {
+    override fun getAll(): List<PurchaseInvoiceDTO> = wrap(PurchaseInvoice.canRead) {
         invoiceService.getAll()
     }
 
-    override fun get(id: Long): PurchaseInvoiceDTO
-    = wrap(PurchaseInvoice.canRead)
+    override fun get(id: Long): PurchaseInvoiceDTO = wrap(PurchaseInvoice.canRead)
     {
         invoiceService.get(id)
     }
 
-    override fun create(request: CreatePurchaseInvoiceRequest): PurchaseInvoiceDTO
-    = wrap(PurchaseInvoice.canCreate)
+    override fun create(request: CreatePurchaseInvoiceRequest): PurchaseInvoiceDTO = wrap(PurchaseInvoice.canCreate)
     {
-        invoiceService.create(CreatePurchaseInvoice(
-            request.purchaserId,
-            request.businessEntityId,
-            request.issuedAt,
-            request.items
-        ))
+        invoiceService.create(
+            CreatePurchaseInvoice(
+                request.purchaserId,
+                request.businessEntityId,
+                request.issuedAt,
+                request.items
+            )
+        )
     }
 
-    override fun createInvoiceCorrection(id: Long, request: CreateInvoiceCorrectionRequest)
-    = wrap(PurchaseInvoice.canUpdate)
-    {
-        invoiceService.createCorrection(CreatePurchaseInvoiceCorrection(
-            id, request.correctionIssueDate, request.items
-        ))
+    override fun createInvoiceCorrection(id: Long, request: CreateInvoiceCorrectionRequest) =
+        wrap(PurchaseInvoice.canUpdate)
+        {
+            invoiceService.createCorrection(
+                CreatePurchaseInvoiceCorrection(
+                    id, request.correctionIssueDate, request.items
+                )
+            )
 
-        Unit
-    }
+            Unit
+        }
 
-    override fun delete(id: Long)
-    = wrap(PurchaseInvoice.canDelete)
+    override fun delete(id: Long) = wrap(PurchaseInvoice.canDelete)
     {
         invoiceService.delete(id)
     }

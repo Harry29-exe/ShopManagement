@@ -1,12 +1,10 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.service
 
-import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.domain.SalesInvoice
+import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
-import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.utils.plus
-import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import com.wojcikk.shopmanagementapi.utils.secure.isAuthenticated
 import com.wojcikk.shopmanagementapi.utils.validation.validate
 import com.wojcikk.shopmanagementapi.utils.wrap
@@ -30,12 +28,12 @@ class SalesInvoiceServiceImpl(
 
     override fun get(id: Long): SalesInvoiceDTO =
         isAuthenticated()
-    {
-        return salesInvoiceRepo
-            .findByIdOrNull(id)
-            ?.toDTO()
-            ?:throw SalesInvoice.notExistWith(id)
-    }
+        {
+            return salesInvoiceRepo
+                .findByIdOrNull(id)
+                ?.toDTO()
+                ?: throw SalesInvoice.notExistWith(id)
+        }
 
 
     override fun create(command: CreateSalesInvoice): SalesInvoiceDTO = wrap(
@@ -55,8 +53,7 @@ class SalesInvoiceServiceImpl(
         newInvoice.toDTO()
     }
 
-    override fun createCorrection(command: CreateSalesInvoiceCorrection): SalesInvoiceDTO
-    = wrap(SalesInvoice.canUpdate)
+    override fun createCorrection(command: CreateSalesInvoiceCorrection): SalesInvoiceDTO = wrap(SalesInvoice.canUpdate)
     {
         val invoice = salesInvoiceRepo
             .findByIdOrNull(command.invoiceId)
@@ -71,12 +68,11 @@ class SalesInvoiceServiceImpl(
             .toDTO()
     }
 
-    override fun markAsPayed(invoiceId: Long): SalesInvoiceDTO
-    = wrap(SalesInvoice.canUpdate)
+    override fun markAsPayed(invoiceId: Long): SalesInvoiceDTO = wrap(SalesInvoice.canUpdate)
     {
         val invoice = salesInvoiceRepo
             .findByIdOrNull(invoiceId)
-            ?:throw SalesInvoice.notExistWith(invoiceId)
+            ?: throw SalesInvoice.notExistWith(invoiceId)
 
         invoice.markAsPayed()
 

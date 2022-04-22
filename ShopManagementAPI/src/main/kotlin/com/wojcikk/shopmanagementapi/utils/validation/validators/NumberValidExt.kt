@@ -7,7 +7,7 @@ inline fun <T : Comparable<T>> T.max(maxVal: T): T {
         throw ValidationException(this, "Value: $this is bigger that $maxVal")
     }
 
-    return this;
+    return this
 }
 
 inline fun <T : Comparable<T>> T.min(minVal: T): T {
@@ -15,10 +15,10 @@ inline fun <T : Comparable<T>> T.min(minVal: T): T {
         throw ValidationException(this, "Value $this is smaller that $minVal")
     }
 
-    return this;
+    return this
 }
 
-inline fun <T:Comparable<T>> T.between(minVal: T, maxVal: T): T {
+inline fun <T : Comparable<T>> T.between(minVal: T, maxVal: T): T {
     if (this >= maxVal) {
         throw ValidationException(this, "Value: $this is bigger/equal to $maxVal")
     }

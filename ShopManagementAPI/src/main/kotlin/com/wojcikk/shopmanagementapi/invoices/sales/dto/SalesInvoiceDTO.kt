@@ -1,7 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.dto
 
 import com.wojcikk.shopmanagementapi.bussines_entity.dto.BusinessEntityDTO
-import java.util.Date
+import java.util.*
 
 class SalesInvoiceDTO(
     val id: Long,

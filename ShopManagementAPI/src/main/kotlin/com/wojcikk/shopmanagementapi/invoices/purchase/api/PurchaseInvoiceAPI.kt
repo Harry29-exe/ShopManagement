@@ -3,7 +3,7 @@ package com.wojcikk.shopmanagementapi.invoices.purchase.api
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
 import org.springframework.web.bind.annotation.*
-import java.util.Date
+import java.util.*
 
 @RequestMapping("/purchase-invoices")
 interface PurchaseInvoicesAPI {

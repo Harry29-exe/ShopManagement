@@ -6,7 +6,7 @@ import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSoldItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.utils.FrontendCors
 import org.springframework.web.bind.annotation.*
-import java.util.Date
+import java.util.*
 
 @RequestMapping("/sales-invoices")
 @FrontendCors

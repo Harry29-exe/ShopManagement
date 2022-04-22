@@ -2,11 +2,7 @@ package com.wojcikk.shopmanagementapi.user.domain
 
 import com.wojcikk.shopmanagementapi.user.dto.UserDTO
 import org.springframework.security.crypto.password.PasswordEncoder
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToMany
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "users")
@@ -63,7 +59,7 @@ class UserEntity(
         }
         roles.add(UserRole(role, this))
     }
-    
+
     fun revokeRole(role: Role) {
         roles.removeIf { r -> r.role == role }
     }

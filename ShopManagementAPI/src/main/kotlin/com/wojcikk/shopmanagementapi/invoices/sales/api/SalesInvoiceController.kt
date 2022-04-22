@@ -16,37 +16,38 @@ class SalesInvoiceController(
 
     ) : SalesInvoicesAPI {
 
-    override fun getAllSalesInvoices(): List<SalesInvoiceDTO>
-    = isAuthenticated {
+    override fun getAllSalesInvoices(): List<SalesInvoiceDTO> = isAuthenticated {
         return invoicesService.getAll()
     }
 
-    override fun getSalesInvoice(invoiceId: Long): SalesInvoiceDTO
-    = isAuthenticated {
+    override fun getSalesInvoice(invoiceId: Long): SalesInvoiceDTO = isAuthenticated {
         return invoicesService.get(invoiceId)
     }
 
-    override fun createSalesInvoice(request: CreateSalesInvoiceRequest): SalesInvoiceDTO
-    = wrap(SalesInvoice.canCreate)
+    override fun createSalesInvoice(request: CreateSalesInvoiceRequest): SalesInvoiceDTO = wrap(SalesInvoice.canCreate)
     {
-        invoicesService.create(CreateSalesInvoice(
-            request.sellerId,
-            request.businessEntityId,
-            request.issuedAt,
-            request.items
-        ))
+        invoicesService.create(
+            CreateSalesInvoice(
+                request.sellerId,
+                request.businessEntityId,
+                request.issuedAt,
+                request.items
+            )
+        )
     }
 
-    override fun createInvoiceCorrection(invoiceId: Long, requestBody: CreateInvoiceCorrectionRequest)
-    = wrap(isAuthenticated) {
-        invoicesService.createCorrection(CreateSalesInvoiceCorrection(
-            invoiceId,
-            requestBody.correctionIssueDate,
-            requestBody.items
-        ))
+    override fun createInvoiceCorrection(invoiceId: Long, requestBody: CreateInvoiceCorrectionRequest) =
+        wrap(isAuthenticated) {
+            invoicesService.createCorrection(
+                CreateSalesInvoiceCorrection(
+                    invoiceId,
+                    requestBody.correctionIssueDate,
+                    requestBody.items
+                )
+            )
 
-        Unit
-    }
+            Unit
+        }
 
     override fun markInvoiceAsPayed(invoiceId: Long): SalesInvoiceDTO {
         return invoicesService.markAsPayed(invoiceId)

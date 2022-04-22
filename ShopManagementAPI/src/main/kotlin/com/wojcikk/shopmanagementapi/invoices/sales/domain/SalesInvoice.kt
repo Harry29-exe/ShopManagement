@@ -1,7 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.domain
 
-import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
+import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSoldItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
@@ -14,7 +14,7 @@ import com.wojcikk.shopmanagementapi.utils.Wrapper
 import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import org.springframework.data.repository.findByIdOrNull
 import java.math.BigDecimal
-import java.util.Date
+import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -49,7 +49,7 @@ class SalesInvoice(
     private val items: MutableSet<SoldItem> = invoiceItems.map { invoiceItem ->
         val item = productRepo
             .findByIdOrNull(invoiceItem.itemId)
-            ?:throw Item.notExistWith(invoiceItem.itemId)
+            ?: throw Item.notExistWith(invoiceItem.itemId)
 
         item.decreaseQuantity(invoiceItem.quantity)
 
@@ -103,14 +103,13 @@ class SalesInvoice(
     )
 
 
-    private fun createInvoiceItem(newItemInfo: NewSoldItemDTO, item: Item)
-    = SoldItem(
+    private fun createInvoiceItem(newItemInfo: NewSoldItemDTO, item: Item) = SoldItem(
         item.id,
-        newItemInfo.nameOnInvoice?:item.codeName,
+        newItemInfo.nameOnInvoice ?: item.codeName,
         newItemInfo.quantity,
-        newItemInfo.price?:item.getPriceAt(issueDate),
-        newItemInfo.taxRate?:item.taxRate,
-        newItemInfo.discount?: BigDecimal.ZERO,
+        newItemInfo.price ?: item.getPriceAt(issueDate),
+        newItemInfo.taxRate ?: item.taxRate,
+        newItemInfo.discount ?: BigDecimal.ZERO,
         this
     )
 

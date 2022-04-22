@@ -7,4 +7,5 @@ class ResourceNotExistException(
 ) : RuntimeException(
     "Resource: ${resourceClass.simpleName} " +
             "with field: $fieldName of value: $fieldValue " +
-            "does not exist")
+            "does not exist"
+)

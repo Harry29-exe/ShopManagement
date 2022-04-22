@@ -17,17 +17,23 @@ class PurchasedItem(
 ) {
 
     @Column(name = "item_id", nullable = false)
-    private val itemId: Long = itemInfo.itemId;
+    private val itemId: Long = itemInfo.itemId
+
     @Column(nullable = false, name = "name_on_invoice", length = 32)
     private val nameOnInvoice: String
+
     @Column(nullable = false)
     private val quantity: Long
+
     @Column(nullable = false)
     private val price: BigDecimal
+
     @Column(nullable = false)
     private val taxRate: BigDecimal
+
     @Column(nullable = false, name = "discount")
     private val discountPercentage: BigDecimal
+
     @ManyToOne
     @JoinColumn(nullable = false, name = "sales_invoice_id")
     private val invoice: PurchaseInvoice = invoice
@@ -54,11 +60,11 @@ class PurchasedItem(
             ?: throw Item.notExistWith(itemInfo.itemId)
         product.increaseQuantity(itemInfo.quantity)
 
-        nameOnInvoice = itemInfo.nameOnInvoice?:product.codeName
+        nameOnInvoice = itemInfo.nameOnInvoice ?: product.codeName
         quantity = itemInfo.quantity
-        price = itemInfo.price?:product.getPriceAt(invoice.issueDate)
-        taxRate = itemInfo.taxRate?:product.taxRate
-        discountPercentage = itemInfo.discount?: BigDecimal.ZERO
+        price = itemInfo.price ?: product.getPriceAt(invoice.issueDate)
+        taxRate = itemInfo.taxRate ?: product.taxRate
+        discountPercentage = itemInfo.discount ?: BigDecimal.ZERO
     }
 
 }

@@ -11,7 +11,6 @@ import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.EXPIRE_TI
 import com.wojcikk.shopmanagementapi.auth.service.JwtService.Companion.TOKEN_COOKIE_NAME
 import com.wojcikk.shopmanagementapi.exception.authentication.InvalidTokenException
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.web.server.Cookie.SameSite
 import org.springframework.http.ResponseCookie
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -34,7 +33,7 @@ class JwtServiceImpl(
 
     override fun appendToken(user: Authentication, response: HttpServletResponse) {
         val now = Date()
-        val expireDate = Date(now.time + EXPIRE_TIME*1000)
+        val expireDate = Date(now.time + EXPIRE_TIME * 1000)
         val csrfToken = generateCsrfToken(CSRF_LEN)
 
         val token = JWT.create()

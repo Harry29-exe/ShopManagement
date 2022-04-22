@@ -2,7 +2,7 @@ package com.wojcikk.shopmanagementapi.invoices.purchase.dto
 
 import com.wojcikk.shopmanagementapi.bussines_entity.dto.BusinessEntityDTO
 import java.math.BigDecimal
-import java.util.Date
+import java.util.*
 
 class PurchaseInvoiceDTO(
     val id: Long,

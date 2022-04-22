@@ -22,7 +22,7 @@ class UserRepoServiceImpl(
     val userRepo: UserRepository,
     val passwordEncoder: PasswordEncoder
 
-    ) : UserRepoService, UserDetailsService {
+) : UserRepoService, UserDetailsService {
 
     override fun create(command: UserRepoService.CreateUser): UserDTO = isAdmin {
         userRepo
@@ -38,8 +38,7 @@ class UserRepoServiceImpl(
             .mapToDTO()
     }
 
-    override fun get(username: String): UserDTO
-    = usernameMatchOrHasRole(username, Role.ADMIN)
+    override fun get(username: String): UserDTO = usernameMatchOrHasRole(username, Role.ADMIN)
     {
         userRepo
             .findByUsername(username)
@@ -47,15 +46,13 @@ class UserRepoServiceImpl(
             ?: throw NoSuchElementException(username)
     }
 
-    override fun getAll(): List<UserDTO>
-    = isAdmin {
+    override fun getAll(): List<UserDTO> = isAdmin {
         userRepo
             .findAll()
             .map { it.mapToDTO() }
     }
 
-    override fun updateDetails(command: UserRepoService.UpdateUserName): UserDTO
-    = isAdmin {
+    override fun updateDetails(command: UserRepoService.UpdateUserName): UserDTO = isAdmin {
         userRepo
             .findByUsername(command.username)
             ?.updateName(command.newName, command.newSurname)
@@ -63,13 +60,13 @@ class UserRepoServiceImpl(
             ?: throw NoSuchElementException(command.username)
     }
 
-    override fun updatePassword(command: UserRepoService.UpdateUserPassword)
-    = usernameMatchOrIsAdmin(command.username, fun() {
-        userRepo
-            .findByUsername(command.username)
-            ?.updatePassword(command.newPassword, passwordEncoder)
-            ?: throw NoSuchUserException(command.username)
-    })
+    override fun updatePassword(command: UserRepoService.UpdateUserPassword) =
+        usernameMatchOrIsAdmin(command.username, fun() {
+            userRepo
+                .findByUsername(command.username)
+                ?.updatePassword(command.newPassword, passwordEncoder)
+                ?: throw NoSuchUserException(command.username)
+        })
 
     override fun grantRole(username: String, role: Role) = wrap(
         isAdmin
@@ -77,7 +74,7 @@ class UserRepoServiceImpl(
         userRepo
             .findByUsername(username)
             ?.grantRole(role)
-            ?:throw NoSuchUserException(username)
+            ?: throw NoSuchUserException(username)
     }
 
     override fun revokeRole(username: String, role: Role) = wrap(
@@ -86,11 +83,10 @@ class UserRepoServiceImpl(
         userRepo
             .findByUsername(username)
             ?.revokeRole(role)
-            ?:throw NoSuchUserException(username)
+            ?: throw NoSuchUserException(username)
     }
 
-    override fun deleteUser(username: String): Int
-    = isAdmin {
+    override fun deleteUser(username: String): Int = isAdmin {
         userRepo.deleteByUsername(username)
     }
 
