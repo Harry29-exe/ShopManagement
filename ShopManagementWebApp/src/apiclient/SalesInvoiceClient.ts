@@ -1,7 +1,7 @@
 import {RequestResult} from "./RequestResult";
 import {ApiConfig} from "./ApiConfig";
 import {Api} from "./Api";
-import {SalesInvoiceDTO} from "../dto/SalesInvoice";
+import {SalesInvoiceDTO} from "../dto/SalesInvoiceDTO";
 
 const csrfHeader = ApiConfig.CsrfHeaderName
 

@@ -9,12 +9,14 @@
     }
 </script>
 
-<div class="table-wrapper">
+<div class="shadow-dark-md rounded-2xl overflow-hidden bg-bg-50">
 <table>
     <thead>
     <tr>
         {#each header.columns as column}
-            <th>{column.name}</th>
+            <th class="border-0 border-b-2 border-black-alpha-800">
+                {column.name}
+            </th>
         {/each}
     </tr>
     </thead>
@@ -23,7 +25,9 @@
     {#each values as value, i}
         <tr on:click={() => header.onRowClick(value)}>
             {#each header.columns as column}
-                <td>{checkIfRowEmpty(column.getValue(value))}</td>
+                <td class="text-center border-l-2 border-black-alpha-400">
+                    {checkIfRowEmpty(column.getValue(value))}
+                </td>
             {/each}
         </tr>
     {/each}
@@ -38,29 +42,18 @@
         border-collapse: collapse;
     }
 
-    thead tr {
-        @apply bg-primary-100;
-    }
-
-    thead th {
-        @apply border-0 border-b-2 border-primary-700;
-    }
-
-    td, th {
-        @apply border-2 border-bg-400 font-medium p-1;
-    }
-
     th {
         @apply font-bold;
+    }
+
+    th,td {
+        @apply py-1 px-3;
     }
 
     tbody tr {
         @apply hover:bg-black-alpha-100 hover:cursor-pointer
     }
 
-    .table-wrapper {
-        @apply shadow-dark-md rounded-2xl overflow-hidden;
-    }
 
 
 </style>
