@@ -2,7 +2,7 @@ package com.wojcikk.shopmanagementapi.invoices.sales.dto
 
 import java.math.BigDecimal
 
-class NewSalesInvoiceItemDTO(
+class NewSoldItemDTO(
     val itemId: Long,
     val quantity: Long,
     val nameOnInvoice: String?,

@@ -1,7 +1,6 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.service
 
-import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSoldItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.utils.validation.Validated
 import java.util.*
@@ -24,7 +23,7 @@ class CreateSalesInvoice(
     val sellerId: Long,
     val businessEntityId: Long,
     val issuedAt: Date,
-    val products: List<NewSalesInvoiceItemDTO>
+    val products: List<NewSoldItemDTO>
 ) : Validated {
 
     override fun isValid(): Boolean {
@@ -36,5 +35,5 @@ class CreateSalesInvoice(
 class CreateSalesInvoiceCorrection(
     val invoiceId: Long,
     val correctionIssueDate: Date,
-    val items: List<NewSalesInvoiceItemDTO>
+    val items: List<NewSoldItemDTO>
 )

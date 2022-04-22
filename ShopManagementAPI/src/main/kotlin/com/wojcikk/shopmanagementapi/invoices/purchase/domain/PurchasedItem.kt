@@ -1,9 +1,7 @@
 package com.wojcikk.shopmanagementapi.invoices.purchase.domain
 
-import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceItemDTO
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceItemDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
 import org.springframework.data.repository.findByIdOrNull
@@ -12,7 +10,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "sales_invoice_items")
-class PurchaseInvoiceItem(
+class PurchasedItem(
     invoice: PurchaseInvoice,
     itemInfo: NewPurchasedItemDTO,
     productRepo: ProductRepo

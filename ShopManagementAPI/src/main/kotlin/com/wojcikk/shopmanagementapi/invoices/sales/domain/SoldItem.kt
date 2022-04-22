@@ -1,14 +1,13 @@
 package com.wojcikk.shopmanagementapi.invoices.sales.domain
 
-import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.dto.SoldItemDTO
 import com.wojcikk.shopmanagementapi.item.domain.Item
 import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
 @Table(name = "sales_invoice_items")
-internal class SalesInvoiceItem(
+internal class SoldItem(
     @Column(name = "item_id", nullable = false)
     private val itemId: Long,
     @Column(nullable = false, name = "name_on_invoice", length = 32)
@@ -35,7 +34,7 @@ internal class SalesInvoiceItem(
     @GeneratedValue
     private val id: Long = 0
 
-    fun toDTO(): SalesInvoiceItemDTO = SalesInvoiceItemDTO(
+    fun toDTO(): SoldItemDTO = SoldItemDTO(
         itemId,
         nameOnInvoice,
         quantity,

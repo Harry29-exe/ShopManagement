@@ -4,15 +4,14 @@ import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistExcepti
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.NewPurchasedItemDTO
 import com.wojcikk.shopmanagementapi.invoices.purchase.dto.PurchaseInvoiceDTO
-import com.wojcikk.shopmanagementapi.item.domain.Item
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
+import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
-import org.springframework.data.repository.findByIdOrNull
-import java.math.BigDecimal
+import com.wojcikk.shopmanagementapi.utils.Wrapper
+import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
 import java.util.Date
 import javax.persistence.*
 
-//todo wrócić do sobótki i invoice'ów
 @Entity
 @Table(name = "purchase_invoices")
 class PurchaseInvoice(
@@ -47,8 +46,8 @@ class PurchaseInvoice(
     private var payed = false
 
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
-    private val items: MutableSet<PurchaseInvoiceItem> = invoiceItems
-        .map { item -> PurchaseInvoiceItem(this, item, productRepo) }
+    private val items: MutableSet<PurchasedItem> = invoiceItems
+        .map { item -> PurchasedItem(this, item, productRepo) }
         .toMutableSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -93,6 +92,19 @@ class PurchaseInvoice(
         fun notExistWith(id: Long): ResourceNotExistException {
             return ResourceNotExistException(PurchaseInvoice::class.java, "id", id)
         }
+
+        private val CREATE = arrayOf(Role.ACCOUNTANT, Role.ADMIN, Role.SELLER)
+        private val READ = Role.ALL
+        private val UPDATE = arrayOf(Role.ACCOUNTANT, Role.ADMIN)
+        private val DELETE = arrayOf(Role.ACCOUNTANT, Role.ADMIN)
+
+        val canCreate: Wrapper = hasAnyRole(*CREATE)
+
+        val canRead: Wrapper = hasAnyRole(*READ)
+
+        val canUpdate = hasAnyRole(*UPDATE)
+
+        val canDelete = hasAnyRole(*DELETE)
     }
 
 }

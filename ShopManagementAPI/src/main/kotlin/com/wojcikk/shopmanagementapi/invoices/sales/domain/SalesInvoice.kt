@@ -3,7 +3,7 @@ package com.wojcikk.shopmanagementapi.invoices.sales.domain
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.bussines_entity.domain.BusinessEntity
 import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
-import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSalesInvoiceItemDTO
+import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSoldItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
 import com.wojcikk.shopmanagementapi.item.domain.Item
@@ -23,7 +23,7 @@ class SalesInvoice(
     entityId: Long,
     sellerId: Long,
     issueDate: Date,
-    invoiceItems: List<NewSalesInvoiceItemDTO>,
+    invoiceItems: List<NewSoldItemDTO>,
     productRepo: ProductRepo
 
 ) {
@@ -46,7 +46,7 @@ class SalesInvoice(
     private val issueDate = issueDate
 
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
-    private val items: MutableSet<SalesInvoiceItem> = invoiceItems.map { invoiceItem ->
+    private val items: MutableSet<SoldItem> = invoiceItems.map { invoiceItem ->
         val item = productRepo
             .findByIdOrNull(invoiceItem.itemId)
             ?:throw Item.notExistWith(invoiceItem.itemId)
@@ -72,7 +72,7 @@ class SalesInvoice(
 
     fun createCorrection(
         correctionIssueDate: Date,
-        items: List<NewSalesInvoiceItemDTO>,
+        items: List<NewSoldItemDTO>,
         productRepo: ProductRepo,
         salesInvoiceRepo: SalesInvoiceRepo
     ): SalesInvoice {
@@ -103,8 +103,8 @@ class SalesInvoice(
     )
 
 
-    private fun createInvoiceItem(newItemInfo: NewSalesInvoiceItemDTO, item: Item)
-    = SalesInvoiceItem(
+    private fun createInvoiceItem(newItemInfo: NewSoldItemDTO, item: Item)
+    = SoldItem(
         item.id,
         newItemInfo.nameOnInvoice?:item.codeName,
         newItemInfo.quantity,
