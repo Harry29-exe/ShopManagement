@@ -2,7 +2,6 @@
     import {goto} from "$app/navigation";
     import AccountButton from "./AccountButton.svelte";
     import {authStore} from "../../stores/AuthStore";
-    import {onDestroy} from "svelte";
 
     interface PageLink {
         name: string;
@@ -11,7 +10,8 @@
 
     const pages: PageLink[] = [
         {name: "Home", link: "/"},
-        {name: "Invoices", link: "/invoices"}
+        {name: "Invoices", link: "/invoices"},
+        {name: "Items", link: "/items"}
     ]
 
     const loginPages: PageLink[] = [

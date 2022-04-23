@@ -47,7 +47,7 @@
     }
 
     .btn-md {
-        @apply py-1.5 px-3 m-1.5 border-2 text-2xl
+        @apply py-1.5 px-3 m-1.5 border-2 text-xl
         bg-bg-200 rounded-md border-bg-400
         hover:bg-bg-300;
     }

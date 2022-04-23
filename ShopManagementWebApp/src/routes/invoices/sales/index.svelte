@@ -30,18 +30,18 @@
 
 </script>
 
-<div class="widget-lg w-container-md w-11/12 v-stack mt-10">
+<div class="widget-lg w-container-md v-stack mt-10">
     <div class="v-stack w-full md:w-11/12">
 
-        <div class="text-4xl font-bold mb-10">Sales Invoices</div>
+        <div class="header-lg">Sales Invoices</div>
 
-        <div class="center mb-6 border-2 border-black-alpha-400 rounded-md px-20 py-2">
+        <div class="widget-md mb-6">
             <button on:click={() => goto("/invoices/sales/new")}
-                    class="btn-lg bg-bg-50 w-80px"
+                    class="btn-md bg-bg-50 w-80px"
             >
                 +
             </button>
-            <button class="btn-lg bg-bg-50 w-80px" disabled>
+            <button class="btn-md bg-bg-50 w-80px text-black-alpha-500" disabled>
                 ?
             </button>
         </div>
