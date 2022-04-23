@@ -43,7 +43,7 @@ CREATE TABLE items
     id                SERIAL8 PRIMARY KEY NOT NULL,
     code_name         varchar(32)         NOT NULL,
     name              varchar(192)        NOT NULL,
-    type              int2                NOT NULL, -- enum
+    type              int2                NOT NULL DEFAULT 0, -- enum
     current_price     decimal             NOT NULL,
     tax_rate          DECIMAL             NOT NULL,
     description       text                NOT NULL,

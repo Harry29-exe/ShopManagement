@@ -68,7 +68,7 @@
     }
 
     .btn-success-md {
-        @apply py-1.5 px-3 m-1.5 border-4 text-xl
+        @apply py-1.5 px-3 border-4 text-xl
         text-white font-bold bg-emerald-700
         rounded-md border-emerald-700
         hover:border-emerald-900

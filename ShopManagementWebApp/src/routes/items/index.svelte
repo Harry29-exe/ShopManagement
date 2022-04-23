@@ -31,7 +31,9 @@
     <p class="header-lg">Items</p>
 
     <div class="widget-md mb-8">
-        <button class="btn-md">
+        <button on:click={() => goto($page.url + "/new")}
+                class="btn-md"
+        >
             Add
         </button>
         <button class="btn-md text-black-alpha-500" disabled>

@@ -59,5 +59,18 @@ export class ItemClient {
 }
 
 export class CreateItemRequest {
+    public name: string;
+    public codeName: string;
+    public description: string;
+    public price: number;
+    public taxRate: number;
 
+
+    constructor(name: string, codeName: string, description: string, price: number, taxRate: number) {
+        this.name = name;
+        this.codeName = codeName;
+        this.description = description;
+        this.price = price;
+        this.taxRate = taxRate;
+    }
 }
