@@ -1,7 +1,7 @@
 <script lang="ts">
-    import {SalesInvoiceDTO} from "../../dto/SalesInvoiceDTOs";
+    import {PurchaseInvoiceDTO} from "../../dto/PurchaseInvoiceDTOs";
 
-    export let invoice: SalesInvoiceDTO;
+    export let invoice: PurchaseInvoiceDTO;
 </script>
 
 <table class="md:w-[70%] w-full">
@@ -15,8 +15,8 @@
         <td>{invoice.businessEntity.entityName}</td>
     </tr>
     <tr>
-        <th>Seller fullname</th>
-        <td>{invoice.sellerFullname}</td>
+        <th>Purchaser fullname</th>
+        <td>{invoice.purchaserFullname}</td>
     </tr>
     <tr>
         <th>Issue date</th>

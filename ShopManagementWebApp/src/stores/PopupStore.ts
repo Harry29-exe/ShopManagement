@@ -31,6 +31,19 @@ export class AppMessage {
         return new AppMessage("", MsgType.NONE)
     }
 
+    public static httpError(httpCode: number): AppMessage {
+        switch (httpCode) {
+            case 400:
+                return AppMessage.error("Bad data, please verify input data")
+            case 401:
+                return AppMessage.error("Please login to perform this action")
+            case 403:
+                return AppMessage.error("You have no permission to perform this action")
+            default:
+                return AppMessage.error("Something went very wrong, please try again later")
+        }
+    }
+
 }
 
 export enum MsgType {

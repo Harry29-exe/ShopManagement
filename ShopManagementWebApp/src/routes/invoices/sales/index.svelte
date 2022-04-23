@@ -2,20 +2,20 @@
     import Table from "../../../components/table/Table.svelte";
     import {onMount} from "svelte";
     import {SalesInvoiceClient} from "../../../apiclient/SalesInvoiceClient";
-    import {SalesInvoiceDTOs} from "../../../dto/SalesInvoiceDTOs";
+    import {SalesInvoiceDTO} from "../../../dto/SalesInvoiceDTOs";
     import {popupStore} from "../../../stores/PopupStore";
     import {TableHeader} from "../../../components/table/TableHeader";
     import {goto} from "$app/navigation";
     import {page} from "$app/stores";
 
-    const header: TableHeader<SalesInvoiceDTOs> = TableHeader.fromArray<SalesInvoiceDTOs>([
+    const header: TableHeader<SalesInvoiceDTO> = TableHeader.fromArray<SalesInvoiceDTO>([
         ["Invoice id", inv => inv.id],
         ["Invoice correction", inv => inv.correctionId],
         ["Contractor name", inv => inv.businessEntity.entityName],
         ["Issue date", inv => inv.issueDate],
         ["Is payed", inv => inv.isPayed]
     ], inv => goto(`${$page.url}/${inv.id}`));
-    let invoiceList: SalesInvoiceDTOs[] = [];
+    let invoiceList: SalesInvoiceDTO[] = [];
 
     onMount(async () => {
         let res = await SalesInvoiceClient.getAllSalesInvoices()

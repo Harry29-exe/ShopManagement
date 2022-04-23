@@ -1,16 +1,16 @@
 import {BusinessEntityDTO} from "../apiclient/BusinessEntityClient";
 
-export class SalesInvoiceDTO {
+export class PurchaseInvoiceDTO {
     public readonly id: number;
     public readonly correctionId?: number;
-    public readonly sellerFullname: String;
+    public readonly purchaserFullname: String;
     public readonly businessEntity: BusinessEntityDTO;
     public readonly issueDate: Date;
     public readonly isPayed: Boolean;
-    public readonly products: SoldItemDTO[];
+    public readonly products: PurchasedItemDTO[];
 }
 
-export class SoldItemDTO {
+export class PurchasedItemDTO {
     public readonly itemId: number;
     public readonly nameOnInvoice: String;
     public readonly quantity: number;
@@ -19,7 +19,7 @@ export class SoldItemDTO {
     public readonly discountPercentage: number;
 }
 
-export class NewSoldItemDTO {
+export class NewPurchasedItemDTO {
     public readonly itemId: number;
     public readonly quantity: number;
     public readonly nameOnInvoice?: String;
@@ -27,4 +27,3 @@ export class NewSoldItemDTO {
     public readonly taxRate?: number;
     public readonly discount?: number;
 }
-

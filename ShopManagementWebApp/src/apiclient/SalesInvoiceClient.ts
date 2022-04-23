@@ -1,7 +1,7 @@
 import {RequestResult} from "./RequestResult";
 import {ApiConfig} from "./ApiConfig";
 import {Api} from "./Api";
-import {NewSoldItemDTO, SalesInvoiceDTOs} from "../dto/SalesInvoiceDTOs";
+import {NewSoldItemDTO, SalesInvoiceDTO} from "../dto/SalesInvoiceDTOs";
 import {AppMessage} from "../stores/PopupStore";
 
 const csrfHeader = ApiConfig.CsrfHeaderName
@@ -9,7 +9,8 @@ const csrfHeader = ApiConfig.CsrfHeaderName
 export class SalesInvoiceClient {
     private static apiAddress = "/sales-invoices"
 
-    public static async getAllSalesInvoices(): Promise<RequestResult<SalesInvoiceDTOs[]>> {
+    public static async getAllSalesInvoices()
+        : Promise<RequestResult<SalesInvoiceDTO[]>> {
         let response = await Api.fetchAuthorized(this.address("/all"), {})
 
         if (response.ok && response.result && response.result.ok) {
@@ -20,7 +21,8 @@ export class SalesInvoiceClient {
         }
     }
 
-    public static async getSalesInvoice(id: number): Promise<RequestResult<SalesInvoiceDTOs>> {
+    public static async getSalesInvoice(id: number)
+        : Promise<RequestResult<SalesInvoiceDTO>> {
         let response = await Api.fetchAuthorized(
             this.address("/" + id), {}
         )
@@ -33,7 +35,7 @@ export class SalesInvoiceClient {
     }
 
     public static async createSalesInvoice(request: CreateSalesInvoiceRequest)
-        : Promise<RequestResult<SalesInvoiceDTOs>> {
+        : Promise<RequestResult<void>> {
         let response = await Api.fetchAuthorized(this.address(""), {
             method: 'POST',
             body: JSON.stringify(request),
@@ -41,7 +43,7 @@ export class SalesInvoiceClient {
         })
         if (response.result) {
             if (response.result.ok) {
-                return RequestResult.ok(await response.result.json())
+                return RequestResult.ok(undefined)
             } else {
                 return RequestResult.error(AppMessage.error("Could not create invoice, " +
                     "please verify data"))
