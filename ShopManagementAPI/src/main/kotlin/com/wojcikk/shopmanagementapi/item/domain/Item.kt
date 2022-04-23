@@ -2,8 +2,8 @@ package com.wojcikk.shopmanagementapi.item.domain
 
 import com.wojcikk.shopmanagementapi.exception.item.NotEnoughItemsException
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
-import com.wojcikk.shopmanagementapi.item.dto.ProductDTO
-import com.wojcikk.shopmanagementapi.item.dto.ProductPriceDTO
+import com.wojcikk.shopmanagementapi.item.dto.ItemDTO
+import com.wojcikk.shopmanagementapi.item.dto.ItemPriceDTO
 import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
@@ -76,8 +76,8 @@ class Item(
         return priceAtDate.price
     }
 
-    fun toDTO(): ProductDTO {
-        return ProductDTO(
+    fun toDTO(): ItemDTO {
+        return ItemDTO(
             id,
             name,
             codeName,
@@ -87,9 +87,9 @@ class Item(
         )
     }
 
-    private fun mapPriceHistoryToDTO(): List<ProductPriceDTO> {
+    private fun mapPriceHistoryToDTO(): List<ItemPriceDTO> {
         return priceHistory
-            .map { ProductPriceDTO(it.setDate, it.price) }
+            .map { ItemPriceDTO(it.setDate, it.price) }
             .toCollection(ArrayList())
     }
 
