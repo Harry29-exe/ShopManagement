@@ -19,6 +19,9 @@ class PurchasedItem(
     @Column(name = "item_id", nullable = false)
     private val itemId: Long = itemInfo.itemId
 
+    @Column(name = "invalidated", nullable = false)
+    private var invalidated: Boolean = false
+
     @Column(nullable = false, name = "name_on_invoice", length = 32)
     private val nameOnInvoice: String
 
@@ -54,6 +57,11 @@ class PurchasedItem(
         taxRate,
         discountPercentage
     )
+
+    fun invalidate() {
+        item.decreaseQuantity(quantity)
+        invalidated = true
+    }
 
     init {
         val product = productRepo.findByIdOrNull(itemInfo.itemId)

@@ -31,7 +31,7 @@ class PurchaseInvoiceServiceImpl(
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    override fun create(command: CreatePurchaseInvoice): PurchaseInvoiceDTO = wrap(isAuthenticated)
+    override fun create(command: CreatePurchaseInvoice) = wrap(isAuthenticated)
     {
         val newInvoice = PurchaseInvoice(
             command.businessEntityId,
@@ -43,11 +43,12 @@ class PurchaseInvoiceServiceImpl(
 
         purchaseInvoiceRepo
             .save(newInvoice)
-            .toDTO()
+
+        Unit
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    override fun createCorrection(command: CreatePurchaseInvoiceCorrection): PurchaseInvoiceDTO = wrap(isAuthenticated)
+    override fun createCorrection(command: CreatePurchaseInvoiceCorrection) = wrap(isAuthenticated)
     {
         val invoice = purchaseInvoiceRepo
             .findByIdOrNull(command.invoiceId)
@@ -55,7 +56,9 @@ class PurchaseInvoiceServiceImpl(
         val correction = invoice
             .createCorrection(command.correctionIssueDate, command.items, productRepo)
 
-        purchaseInvoiceRepo.save(correction).toDTO()
+        purchaseInvoiceRepo.save(correction)
+
+        Unit
     }
 
     //todo change permission

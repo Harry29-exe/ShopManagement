@@ -11,9 +11,9 @@ interface PurchaseInvoiceService {
 
     fun get(id: Long): PurchaseInvoiceDTO
 
-    fun create(command: CreatePurchaseInvoice): PurchaseInvoiceDTO
+    fun create(command: CreatePurchaseInvoice)
 
-    fun createCorrection(command: CreatePurchaseInvoiceCorrection): PurchaseInvoiceDTO
+    fun createCorrection(command: CreatePurchaseInvoiceCorrection)
 
     fun delete(id: Long)
 

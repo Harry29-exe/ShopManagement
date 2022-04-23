@@ -4,8 +4,8 @@ CREATE TABLE purchase_invoices
     correction_id int8 UNIQUE,
     entity_id     int8                NOT NULL,
     purchaser_id  int8                NOT NULL,
-    issue_date     timestamptz         NOT NULL,
-    is_payed bool NOT NULL ,
+    issue_date    timestamptz         NOT NULL,
+    is_payed      bool                NOT NULL,
 
     FOREIGN KEY (correction_id)
         REFERENCES purchase_invoices (id),
@@ -18,6 +18,7 @@ CREATE TABLE purchase_invoices
 CREATE TABLE purchase_invoice_items
 (
     id                  SERIAL8 PRIMARY KEY NOT NULL,
+    invalidated         bool                NOT NULL,
     purchase_invoice_id int8                NOT NULL,
     item_id             int8                NOT NULL,
     name_on_invoice     varchar(32)         NOT NULL,
@@ -38,8 +39,8 @@ CREATE TABLE sales_invoices
     correction_id int8 UNIQUE,
     seller_id     int8                NOT NULL,
     entity_id     int8                NOT NULL,
-    issue_date     timestamptz         NOT NULL,
-    is_payed bool NOT NULL ,
+    issue_date    timestamptz         NOT NULL,
+    is_payed      bool                NOT NULL,
 
     FOREIGN KEY (correction_id)
         REFERENCES sales_invoices (id),
@@ -52,6 +53,7 @@ CREATE TABLE sales_invoices
 CREATE TABLE sales_invoice_items
 (
     id               SERIAL8 PRIMARY KEY NOT NULL,
+    invalidated      bool                NOT NULL,
     sales_invoice_id int8                NOT NULL,
     item_id          int8                NOT NULL,
     name_on_invoice  varchar(32)         NOT NULL,
@@ -68,8 +70,8 @@ CREATE TABLE sales_invoice_items
 
 CREATE TABLE receipts
 (
-    id        SERIAL8 PRIMARY KEY NOT NULL,
-    seller_id int8                NOT NULL,
+    id         SERIAL8 PRIMARY KEY NOT NULL,
+    seller_id  int8                NOT NULL,
     issue_date timestamptz         NOT NULL,
 
     FOREIGN KEY (seller_id)

@@ -69,6 +69,10 @@ class PurchaseInvoice(
             items, productRepo
         )
 
+        for (item in this.items) {
+            item.invalidate()
+        }
+
         this.correction = correction
 
         return correction

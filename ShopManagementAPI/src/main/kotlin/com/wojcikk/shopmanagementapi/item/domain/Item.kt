@@ -1,5 +1,6 @@
 package com.wojcikk.shopmanagementapi.item.domain
 
+import com.wojcikk.shopmanagementapi.exception.item.NotEnoughItemsException
 import com.wojcikk.shopmanagementapi.exception.resources.ResourceNotExistException
 import com.wojcikk.shopmanagementapi.item.dto.ProductDTO
 import com.wojcikk.shopmanagementapi.item.dto.ProductPriceDTO
@@ -29,7 +30,7 @@ class Item(
     var currentPrice = currentPrice
         private set
 
-    @OneToMany(mappedBy = "item", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(mappedBy = "item", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     val priceHistory: MutableSet<ItemPrice> = HashSet(1)
 
     init {
@@ -50,6 +51,9 @@ class Item(
     }
 
     fun decreaseQuantity(decreaseBy: Long) {
+        if (quantityInStock < decreaseBy) {
+            throw NotEnoughItemsException()
+        }
         this.quantityInStock -= decreaseBy
     }
 

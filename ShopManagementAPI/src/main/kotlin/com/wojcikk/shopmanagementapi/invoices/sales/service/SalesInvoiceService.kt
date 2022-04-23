@@ -11,11 +11,11 @@ interface SalesInvoiceService {
 
     fun get(id: Long): SalesInvoiceDTO
 
-    fun create(command: CreateSalesInvoice): SalesInvoiceDTO
+    fun create(command: CreateSalesInvoice)
 
-    fun createCorrection(command: CreateSalesInvoiceCorrection): SalesInvoiceDTO
+    fun createCorrection(command: CreateSalesInvoiceCorrection)
 
-    fun markAsPayed(invoiceId: Long): SalesInvoiceDTO
+    fun markAsPayed(invoiceId: Long)
 
 }
 
@@ -26,8 +26,9 @@ class CreateSalesInvoice(
     val products: List<NewSoldItemDTO>
 ) : Validated {
 
+    //todo
     override fun isValid(): Boolean {
-        TODO("Not yet implemented")
+        return true
     }
 
 }

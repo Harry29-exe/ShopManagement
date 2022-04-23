@@ -23,7 +23,7 @@ class SalesInvoiceController(
         return invoicesService.get(invoiceId)
     }
 
-    override fun createSalesInvoice(request: CreateSalesInvoiceRequest): SalesInvoiceDTO = wrap(SalesInvoice.canCreate)
+    override fun createSalesInvoice(request: CreateSalesInvoiceRequest) = wrap(SalesInvoice.canCreate)
     {
         invoicesService.create(
             CreateSalesInvoice(
@@ -36,7 +36,8 @@ class SalesInvoiceController(
     }
 
     override fun createInvoiceCorrection(invoiceId: Long, requestBody: CreateSalesInvoiceCorrectionRequest) =
-        wrap(isAuthenticated) {
+        wrap(isAuthenticated)
+        {
             invoicesService.createCorrection(
                 CreateSalesInvoiceCorrection(
                     invoiceId,
@@ -44,11 +45,9 @@ class SalesInvoiceController(
                     requestBody.items
                 )
             )
-
-            Unit
         }
 
-    override fun markInvoiceAsPayed(invoiceId: Long): SalesInvoiceDTO {
+    override fun markInvoiceAsPayed(invoiceId: Long) {
         return invoicesService.markAsPayed(invoiceId)
     }
 }

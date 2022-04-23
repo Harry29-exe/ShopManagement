@@ -6,14 +6,11 @@ import com.wojcikk.shopmanagementapi.invoices.purchase.domain.PurchaseInvoice
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.NewSoldItemDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.dto.SalesInvoiceDTO
 import com.wojcikk.shopmanagementapi.invoices.sales.repository.SalesInvoiceRepo
-import com.wojcikk.shopmanagementapi.item.domain.Item
 import com.wojcikk.shopmanagementapi.item.repository.ProductRepo
 import com.wojcikk.shopmanagementapi.user.domain.Role
 import com.wojcikk.shopmanagementapi.user.domain.UserEntity
 import com.wojcikk.shopmanagementapi.utils.Wrapper
 import com.wojcikk.shopmanagementapi.utils.secure.hasAnyRole
-import org.springframework.data.repository.findByIdOrNull
-import java.math.BigDecimal
 import java.util.*
 import javax.persistence.*
 
@@ -30,7 +27,7 @@ class SalesInvoice(
 
     @Id
     @GeneratedValue
-    private val id: Long = 0
+    val id: Long = 0
 
     @OneToOne
     @JoinColumn(name = "correction_id", insertable = false, updatable = false)
@@ -43,31 +40,25 @@ class SalesInvoice(
     private var payed = false
 
     @Column(nullable = false)
-    private val issueDate = issueDate
+    val issueDate = issueDate
 
     @OneToMany(mappedBy = "invoice", cascade = [CascadeType.ALL])
-    private val items: MutableSet<SoldItem> = invoiceItems.map { invoiceItem ->
-        val item = productRepo
-            .findByIdOrNull(invoiceItem.itemId)
-            ?: throw Item.notExistWith(invoiceItem.itemId)
-
-        item.decreaseQuantity(invoiceItem.quantity)
-
-        createInvoiceItem(invoiceItem, item)
-    }.toMutableSet()
+    private val items: MutableSet<SoldItem> = invoiceItems
+        .map { item -> SoldItem(this, item, productRepo) }
+        .toMutableSet()
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "seller_id", insertable = false, updatable = false)
+    @JoinColumn(name = "seller_id", insertable = false, updatable = false, nullable = false)
     private lateinit var seller: UserEntity
 
-    @Column(nullable = false, updatable = false, name = "seller_id")
+    @Column(name = "seller_id")
     private val sellerId = sellerId
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "entity_id", insertable = false, updatable = false)
+    @JoinColumn(name = "entity_id", insertable = false, updatable = false, nullable = false)
     private lateinit var entity: BusinessEntity
 
-    @Column(nullable = false, updatable = false, name = "entity_id")
+    @Column(name = "entity_id")
     private val entityId = entityId
 
     fun createCorrection(
@@ -76,6 +67,11 @@ class SalesInvoice(
         productRepo: ProductRepo,
         salesInvoiceRepo: SalesInvoiceRepo
     ): SalesInvoice {
+
+        for (item in this.items) {
+            item.invalidate()
+        }
+
         val correction = SalesInvoice(
             entityId, sellerId, correctionIssueDate,
             items, productRepo
@@ -83,6 +79,7 @@ class SalesInvoice(
         val savedCorrection = salesInvoiceRepo.save(correction)
 
         this.correctionId = savedCorrection.correctionId
+        this.correction = correction
         salesInvoiceRepo.save(this)
 
         return correction
@@ -100,17 +97,6 @@ class SalesInvoice(
         issueDate,
         payed,
         items.map { item -> item.toDTO() }
-    )
-
-
-    private fun createInvoiceItem(newItemInfo: NewSoldItemDTO, item: Item) = SoldItem(
-        item.id,
-        newItemInfo.nameOnInvoice ?: item.codeName,
-        newItemInfo.quantity,
-        newItemInfo.price ?: item.getPriceAt(issueDate),
-        newItemInfo.taxRate ?: item.taxRate,
-        newItemInfo.discount ?: BigDecimal.ZERO,
-        this
     )
 
     companion object {

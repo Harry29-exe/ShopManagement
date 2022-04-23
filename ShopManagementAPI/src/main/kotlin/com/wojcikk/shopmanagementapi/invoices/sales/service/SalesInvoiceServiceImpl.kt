@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional(isolation = Isolation.READ_COMMITTED)
 class SalesInvoiceServiceImpl(
     private val salesInvoiceRepo: SalesInvoiceRepo,
     private val productRepo: ProductRepo
@@ -26,17 +25,17 @@ class SalesInvoiceServiceImpl(
             .map { it.toDTO() }
     }
 
-    override fun get(id: Long): SalesInvoiceDTO =
-        isAuthenticated()
-        {
-            return salesInvoiceRepo
-                .findByIdOrNull(id)
-                ?.toDTO()
-                ?: throw SalesInvoice.notExistWith(id)
-        }
+    override fun get(id: Long): SalesInvoiceDTO = wrap(isAuthenticated)
+    {
+        salesInvoiceRepo
+            .findByIdOrNull(id)
+            ?.toDTO()
+            ?: throw SalesInvoice.notExistWith(id)
+    }
 
 
-    override fun create(command: CreateSalesInvoice): SalesInvoiceDTO = wrap(
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    override fun create(command: CreateSalesInvoice) = wrap(
         SalesInvoice.canCreate + validate(command)
     ) {
         val newInvoice = SalesInvoice(
@@ -50,10 +49,11 @@ class SalesInvoiceServiceImpl(
         salesInvoiceRepo
             .save(newInvoice)
 
-        newInvoice.toDTO()
+        Unit
     }
 
-    override fun createCorrection(command: CreateSalesInvoiceCorrection): SalesInvoiceDTO = wrap(SalesInvoice.canUpdate)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    override fun createCorrection(command: CreateSalesInvoiceCorrection) = wrap(SalesInvoice.canUpdate)
     {
         val invoice = salesInvoiceRepo
             .findByIdOrNull(command.invoiceId)
@@ -65,17 +65,19 @@ class SalesInvoiceServiceImpl(
                 command.items,
                 productRepo, salesInvoiceRepo
             )
-            .toDTO()
+
+        Unit
     }
 
-    override fun markAsPayed(invoiceId: Long): SalesInvoiceDTO = wrap(SalesInvoice.canUpdate)
+    override fun markAsPayed(invoiceId: Long) = wrap(SalesInvoice.canUpdate)
     {
         val invoice = salesInvoiceRepo
             .findByIdOrNull(invoiceId)
             ?: throw SalesInvoice.notExistWith(invoiceId)
 
         invoice.markAsPayed()
+        salesInvoiceRepo.save(invoice)
 
-        invoice.toDTO()
+        Unit
     }
 }

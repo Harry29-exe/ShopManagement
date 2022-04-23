@@ -12,9 +12,12 @@ inline fun <V> wrap(wrapper: Wrapper, noinline func: SimpleFun<V>): V {
     return wrapper.wrap(func)()
 }
 
-inline operator fun Wrapper.plus(other: Wrapper): Wrapper = object : Wrapper {
-    override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
-        return this.wrap(other.wrap(f))
+operator fun Wrapper.plus(other: Wrapper): Wrapper {
+    val first = this
+    return object : Wrapper {
+        override fun <V> wrap(f: SimpleFun<V>): SimpleFun<V> {
+            return first.wrap(other.wrap(f))
+        }
     }
 }
 

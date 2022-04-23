@@ -2,6 +2,7 @@ import {RequestResult} from "./RequestResult";
 import {ApiConfig} from "./ApiConfig";
 import {Api} from "./Api";
 import {NewSoldItemDTO, SalesInvoiceDTOs} from "../dto/SalesInvoiceDTOs";
+import {AppMessage} from "../stores/PopupStore";
 
 const csrfHeader = ApiConfig.CsrfHeaderName
 
@@ -31,10 +32,20 @@ export class SalesInvoiceClient {
         }
     }
 
-    public static async createSalesInvoice(request: CreateSalesInvoiceRequest): Promise<RequestResult<SalesInvoiceDTOs>> {
-        let response = await Api.fetchAuthorized(this.apiAddress, {method: 'POST'})
+    public static async createSalesInvoice(request: CreateSalesInvoiceRequest)
+        : Promise<RequestResult<SalesInvoiceDTOs>> {
+        let response = await Api.fetchAuthorized(this.address(""), {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {'Content-Type': 'application/json'}
+        })
         if (response.result) {
-            return RequestResult.ok(await response.result.json())
+            if (response.result.ok) {
+                return RequestResult.ok(await response.result.json())
+            } else {
+                return RequestResult.error(AppMessage.error("Could not create invoice, " +
+                    "please verify data"))
+            }
         }
         return RequestResult.error(response.msg)
     }

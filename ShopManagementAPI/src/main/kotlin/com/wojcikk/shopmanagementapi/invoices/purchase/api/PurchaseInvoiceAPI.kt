@@ -15,7 +15,7 @@ interface PurchaseInvoicesAPI {
     fun get(@PathVariable id: Long): PurchaseInvoiceDTO
 
     @PostMapping
-    fun create(@RequestBody request: CreatePurchaseInvoiceRequest): PurchaseInvoiceDTO
+    fun create(@RequestBody request: CreatePurchaseInvoiceRequest)
 
     @PostMapping("/{id}/correction")
     fun createInvoiceCorrection(

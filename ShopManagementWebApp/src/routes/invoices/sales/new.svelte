@@ -1,5 +1,7 @@
 <script lang="ts">
     import {NewSoldItemDTO} from "../../../dto/SalesInvoiceDTOs";
+    import {CreateSalesInvoiceRequest, SalesInvoiceClient} from "../../../apiclient/SalesInvoiceClient";
+    import {AppMessage, popupStore} from "../../../stores/PopupStore";
 
     let sellerId: number;
     let businessEntityId: number;
@@ -9,6 +11,22 @@
     function addNewItem() {
         items.push(new NewSoldItemDTO())
         items = items;
+    }
+
+    async function onSubmit() {
+        let result = await SalesInvoiceClient
+            .createSalesInvoice(new CreateSalesInvoiceRequest(
+                sellerId,
+                businessEntityId,
+                issuedAt,
+                items
+            ));
+
+        if (result.ok && result.result) {
+            popupStore.setNew(AppMessage.success("Invoice has been created"))
+        } else {
+            popupStore.setNew(result.msg)
+        }
     }
 </script>
 
@@ -53,7 +71,8 @@
 
     <div class="flex flex-row w-full mt-10">
         <div style="flex-grow: 5"></div>
-        <button class="btn-success-md relative mr-0 ml-auto">
+        <button on:click={onSubmit}
+                class="btn-success-md relative mr-0 ml-auto">
             Submit
         </button>
     </div>

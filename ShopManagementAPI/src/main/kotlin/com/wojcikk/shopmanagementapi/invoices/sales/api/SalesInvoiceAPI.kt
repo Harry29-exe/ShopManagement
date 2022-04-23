@@ -17,7 +17,7 @@ interface SalesInvoicesAPI {
     fun getSalesInvoice(@PathVariable invoiceId: Long): SalesInvoiceDTO
 
     @PostMapping
-    fun createSalesInvoice(@RequestBody request: CreateSalesInvoiceRequest): SalesInvoiceDTO
+    fun createSalesInvoice(@RequestBody request: CreateSalesInvoiceRequest)
 
     @PostMapping("/{invoiceId}/correction")
     fun createInvoiceCorrection(
@@ -26,7 +26,7 @@ interface SalesInvoicesAPI {
     )
 
     @PatchMapping("/{invoiceId}/payed")
-    fun markInvoiceAsPayed(@PathVariable invoiceId: Long): SalesInvoiceDTO
+    fun markInvoiceAsPayed(@PathVariable invoiceId: Long)
 
 }
 

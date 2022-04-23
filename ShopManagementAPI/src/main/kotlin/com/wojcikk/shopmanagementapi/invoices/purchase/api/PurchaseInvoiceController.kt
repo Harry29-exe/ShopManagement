@@ -22,7 +22,7 @@ class PurchaseInvoiceController(
         invoiceService.get(id)
     }
 
-    override fun create(request: CreatePurchaseInvoiceRequest): PurchaseInvoiceDTO = wrap(PurchaseInvoice.canCreate)
+    override fun create(request: CreatePurchaseInvoiceRequest) = wrap(PurchaseInvoice.canCreate)
     {
         invoiceService.create(
             CreatePurchaseInvoice(
@@ -42,8 +42,6 @@ class PurchaseInvoiceController(
                     id, request.correctionIssueDate, request.items
                 )
             )
-
-            Unit
         }
 
     override fun delete(id: Long) = wrap(PurchaseInvoice.canDelete)
