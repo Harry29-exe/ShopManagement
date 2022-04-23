@@ -12,7 +12,7 @@
     </tr>
     <tr>
         <th>Buyer entity</th>
-        <td>{invoice.businessEntity.entityName}</td>
+        <td>{invoice.contractor.entityName}</td>
     </tr>
     <tr>
         <th>Purchaser fullname</th>

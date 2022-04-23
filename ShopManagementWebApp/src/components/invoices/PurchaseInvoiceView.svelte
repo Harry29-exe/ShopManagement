@@ -4,7 +4,7 @@
     import {CompanyInfoClient} from "../../apiclient/CompanyInfoClient";
     import ProductTable from "../table/ProductTable.svelte";
     import {PurchaseInvoiceDTO} from "../../dto/PurchaseInvoiceDTOs";
-    import PurchaseInvoiceView from "./PurchaseInvoiceView.svelte";
+    import PurchaseInvoiceInfo from "./PurchaseInvoiceInfo.svelte";
 
     export let invoice: PurchaseInvoiceDTO;
     let companyInfo: CompanyInfoDTO;
@@ -20,8 +20,8 @@
 
 <div class="bg-bg-200 p-4 min-w-[320px] min-h-[160px] mx-auto rounded-md shadow-dark-md v-stack">
     {#if invoice}
-        <div class="header-md">Sales Invoice</div>
-        <PurchaseInvoiceView invoice={invoice}/>
+        <div class="header-md">Purchase Invoice</div>
+        <PurchaseInvoiceInfo invoice={invoice}/>
 
 
         <div class="text-2xl font-bold my-2">Invoice products</div>

@@ -4,7 +4,7 @@ export class PurchaseInvoiceDTO {
     public readonly id: number;
     public readonly correctionId?: number;
     public readonly purchaserFullname: String;
-    public readonly businessEntity: BusinessEntityDTO;
+    public readonly contractor: BusinessEntityDTO;
     public readonly issueDate: Date;
     public readonly isPayed: Boolean;
     public readonly products: PurchasedItemDTO[];

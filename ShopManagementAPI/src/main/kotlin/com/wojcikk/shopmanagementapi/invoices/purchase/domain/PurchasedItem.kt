@@ -9,14 +9,14 @@ import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
-@Table(name = "sales_invoice_items")
+@Table(name = "purchase_invoice_items")
 class PurchasedItem(
     invoice: PurchaseInvoice,
     itemInfo: NewPurchasedItemDTO,
     productRepo: ProductRepo
 ) {
 
-    @Column(name = "item_id", nullable = false)
+    @Column(name = "item_id")
     private val itemId: Long = itemInfo.itemId
 
     @Column(name = "invalidated", nullable = false)
@@ -38,11 +38,11 @@ class PurchasedItem(
     private val discountPercentage: BigDecimal
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "sales_invoice_id")
+    @JoinColumn(nullable = false, name = "purchase_invoice_id")
     private val invoice: PurchaseInvoice = invoice
 
     @ManyToOne
-    @JoinColumn(insertable = false, updatable = false, name = "item_id")
+    @JoinColumn(insertable = false, updatable = false, nullable = false, name = "item_id")
     private lateinit var item: Item
 
     @Id
@@ -68,6 +68,7 @@ class PurchasedItem(
             ?: throw Item.notExistWith(itemInfo.itemId)
         product.increaseQuantity(itemInfo.quantity)
 
+        item = product
         nameOnInvoice = itemInfo.nameOnInvoice ?: product.codeName
         quantity = itemInfo.quantity
         price = itemInfo.price ?: product.getPriceAt(invoice.issueDate)

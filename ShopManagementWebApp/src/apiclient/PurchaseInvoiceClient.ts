@@ -1,9 +1,8 @@
 import {RequestResult} from "./RequestResult";
-import {PurchaseInvoiceDTO} from "../dto/PurchaseInvoiceDTOs";
+import {NewPurchasedItemDTO, PurchaseInvoiceDTO} from "../dto/PurchaseInvoiceDTOs";
 import {Api} from "./Api";
 import {ApiConfig} from "./ApiConfig";
 import {AppMessage} from "../stores/PopupStore";
-import {NewSoldItemDTO} from "../dto/SalesInvoiceDTOs";
 
 const endpointAddress = ApiConfig.ApiAddress + "/purchase-invoices"
 
@@ -41,7 +40,8 @@ export class PurchaseInvoiceClient {
         let result = await Api.fetchAuthorized(
             this.address(""), {
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(request)
+                body: JSON.stringify(request),
+                method: 'POST'
             })
 
         if (result.ok && result.result) {
@@ -65,10 +65,10 @@ export class CreatePurchaseInvoiceRequest {
     public purchaserId: number;
     public businessEntityId: number;
     public issuedAt: Date;
-    public items: NewSoldItemDTO[];
+    public items: NewPurchasedItemDTO[];
 
 
-    constructor(purchaserId: number, businessEntityId: number, issuedAt: Date, items: NewSoldItemDTO[]) {
+    constructor(purchaserId: number, businessEntityId: number, issuedAt: Date, items: NewPurchasedItemDTO[]) {
         this.purchaserId = purchaserId;
         this.businessEntityId = businessEntityId;
         this.issuedAt = issuedAt;
@@ -78,5 +78,5 @@ export class CreatePurchaseInvoiceRequest {
 
 class CreatePurchaseInvoiceCorrectionRequest {
     public correctionIssueDate: Date;
-    public items: NewSoldItemDTO[];
+    public items: NewPurchasedItemDTO[];
 }
