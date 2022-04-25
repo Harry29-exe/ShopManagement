@@ -1,4 +1,4 @@
-import {BusinessEntityDTO} from "../apiclient/BusinessEntityClient";
+import {BusinessEntityDTO} from "./BusinessEntityDTO";
 
 export class PurchaseInvoiceDTO {
     public readonly id: number;
