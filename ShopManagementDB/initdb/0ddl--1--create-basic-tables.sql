@@ -31,7 +31,7 @@ CREATE TABLE business_entities
 (
     id           SERIAL8 PRIMARY KEY NOT NULL,
     name         varchar(256)        NOT NULL,
-    country_code char(2)             NOT NULL,
+    country_code varchar(2)          NOT NULL,
     city         varchar(256)        NOT NULL,
     nip          varchar(128)        NOT NULL,
     phone_number varchar(28),
