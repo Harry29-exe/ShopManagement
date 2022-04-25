@@ -62,12 +62,27 @@ export class BusinessEntityClient {
 
 }
 
-class CreateBusinessEntityRequest {
+export class CreateBusinessEntityRequest {
     public name: String
     public nip: String
     public countryCode: String
     public city: String
     public email?: String
     public phoneNumber?: String
+
+
+    constructor(name: String,
+                nip: String,
+                countryCode: String,
+                city: String,
+                email?: String,
+                phoneNumber?: String) {
+        this.name = name;
+        this.nip = nip;
+        this.countryCode = countryCode;
+        this.city = city;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 }
 
