@@ -1,12 +1,11 @@
 package com.wojcikk.shopmanagementapi.statistics.api
 
 import com.wojcikk.shopmanagementapi.statistics.dto.SalesReportDTO
-import com.wojcikk.shopmanagementapi.statistics.dto.SellerStatisticsDTO
+import com.wojcikk.shopmanagementapi.statistics.dto.SellerSalesReportDTO
 import com.wojcikk.shopmanagementapi.utils.dto.TimePeriod
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import java.math.BigDecimal
 import java.util.Date
 
 @RequestMapping("/sales-statistics")
@@ -23,5 +22,5 @@ interface SalesStatisticsAPI {
 class SellersResultsResponse(
     val from: Date,
     val to: Date,
-    val statistics: SellerStatisticsDTO
+    val statistics: List<SellerSalesReportDTO>
 )

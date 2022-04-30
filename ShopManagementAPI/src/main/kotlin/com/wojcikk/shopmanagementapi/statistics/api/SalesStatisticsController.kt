@@ -11,7 +11,11 @@ class SalesStatisticsController(
 ) : SalesStatisticsAPI {
 
     override fun getSellersResults(request: TimePeriod): SellersResultsResponse {
-        TODO("Not yet implemented")
+        return SellersResultsResponse(
+            request.from,
+            request.to,
+            salesStatisticsService.getSellersResults(request)
+        )
     }
 
     override fun getSalesReports(request: TimePeriod): SalesReportDTO {
