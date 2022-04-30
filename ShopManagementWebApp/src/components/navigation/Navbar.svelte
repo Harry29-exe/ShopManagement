@@ -12,7 +12,8 @@
         {name: "Home", link: "/"},
         {name: "Invoices", link: "/invoices"},
         {name: "Items", link: "/items"},
-        {name: "Entities", link: "/entities"}
+        {name: "Entities", link: "/entities"},
+        {name: "Reports", link: "/reports"}
     ]
 
     const loginPages: PageLink[] = [
