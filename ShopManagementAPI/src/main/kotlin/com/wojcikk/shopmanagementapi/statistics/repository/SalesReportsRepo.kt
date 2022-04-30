@@ -4,7 +4,7 @@ import com.wojcikk.shopmanagementapi.statistics.dto.SalesReportDataDTO
 import com.wojcikk.shopmanagementapi.statistics.dto.SellerSalesReportDTO
 import com.wojcikk.shopmanagementapi.utils.dto.TimePeriod
 
-interface SalesStatisticsRepository {
+interface SalesReportsRepo {
 
     fun selectSalesReportData(timePeriod: TimePeriod): SalesReportDataDTO
 

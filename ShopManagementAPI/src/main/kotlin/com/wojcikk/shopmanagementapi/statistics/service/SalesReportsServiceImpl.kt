@@ -2,14 +2,14 @@ package com.wojcikk.shopmanagementapi.statistics.service
 
 import com.wojcikk.shopmanagementapi.statistics.dto.SalesReportDTO
 import com.wojcikk.shopmanagementapi.statistics.dto.SellerSalesReportDTO
-import com.wojcikk.shopmanagementapi.statistics.repository.SalesStatisticsRepository
+import com.wojcikk.shopmanagementapi.statistics.repository.SalesReportsRepo
 import com.wojcikk.shopmanagementapi.utils.dto.TimePeriod
 import org.springframework.stereotype.Service
 
 @Service
-class SalesStatisticsServiceImpl(
-    private val salesStatisticsRepo: SalesStatisticsRepository,
-) : SalesStatisticsService {
+class SalesReportsServiceImpl(
+    private val salesStatisticsRepo: SalesReportsRepo,
+) : SalesReportsService {
 
     override fun getSellersResults(timePeriod: TimePeriod): List<SellerSalesReportDTO> {
         return salesStatisticsRepo.selectReportDataGroupBySeller(timePeriod)

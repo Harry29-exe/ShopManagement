@@ -11,16 +11,17 @@ import javax.persistence.PersistenceContext
 import javax.persistence.TemporalType
 
 @Repository
-class SalesStatisticsRepositoryImpl : SalesStatisticsRepository {
+class SalesReportsRepoImpl : SalesReportsRepo {
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
     override fun selectSalesReportData(timePeriod: TimePeriod): SalesReportDataDTO {
 
-        val query = entityManager.createNativeQuery("""
+        val query = entityManager.createNativeQuery(
+            """
             
-            SELECT  sum(sii.price * (1 + sii.tax_rate) * (1 - sii.discount) * sii.quantity) as salesTotal, 
-                    count(DISTINCT si.id) as transactions
+            SELECT  coalesce(sum(sii.price * (1 + sii.tax_rate) * (1 - sii.discount) * sii.quantity), 0), 
+                    count(DISTINCT si.id)
             
             FROM sales_invoices si
                 JOIN sales_invoice_items sii on si.id = sii.sales_invoice_id
@@ -30,7 +31,8 @@ class SalesStatisticsRepositoryImpl : SalesStatisticsRepository {
               AND
                 si.issue_date between :from AND :to
                 
-            """.trimIndent())
+            """.trimIndent()
+        )
         query.setParameter("from", timePeriod.from, TemporalType.DATE)
         query.setParameter("to", timePeriod.to, TemporalType.DATE)
 
@@ -44,39 +46,44 @@ class SalesStatisticsRepositoryImpl : SalesStatisticsRepository {
     }
 
     override fun selectReportDataGroupBySeller(timePeriod: TimePeriod): List<SellerSalesReportDTO> {
-        val query = entityManager.createNativeQuery("""
+        val query = entityManager.createNativeQuery(
+            """
             
             SELECT  u.id,
                     concat(u.name, ' ', u.surname),
-                    sum(sii.price * (1 + sii.tax_rate) * (1 - sii.discount) * sii.quantity) as salesTotal, 
-                    count(DISTINCT si.id) as transactions
-            
-            FROM sales_invoices si
-                JOIN sales_invoice_items sii on si.id = sii.sales_invoice_id
-                JOIN users u on si.seller_id = u.id
+                    count(DISTINCT si.id),
+                    coalesce(sum(sii.price * (1 + sii.tax_rate) * (1 - sii.discount) * sii.quantity), 0)
+                    
+            FROM users u
+                LEFT OUTER JOIN sales_invoices si on (
+                    u.id = si.seller_id
+                        AND
+                    si.correction_id IS NULL
+                        AND
+                    si.issue_date between :from AND :to
+                )
                 
-            WHERE
-                si.correction_id IS NULL
-              AND
-                si.issue_date between :from AND :to
-                
+                LEFT JOIN sales_invoice_items sii on si.id = sii.sales_invoice_id
+
             GROUP BY u.id
+            ;
             
-        """.trimIndent())
+        """.trimIndent()
+        )
 
         query.setParameter("from", timePeriod.from, TemporalType.DATE)
         query.setParameter("to", timePeriod.to, TemporalType.DATE)
 
         val resultList = query.resultList
         if (resultList.size == 0) {
-            throw IllegalStateException("Database should always return exactly one result")
+            throw IllegalStateException()
         }
 
         return resultList.map {
             val result = it as Array<*>
 
             SellerSalesReportDTO(
-                result[0] as Long,
+                (result[0] as BigInteger).toLong(),
                 result[1] as String,
                 (result[2] as BigInteger).toLong(),
                 result[3] as BigDecimal

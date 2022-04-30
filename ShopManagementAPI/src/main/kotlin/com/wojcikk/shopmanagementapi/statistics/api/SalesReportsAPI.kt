@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import java.util.Date
 
-@RequestMapping("/sales-statistics")
-interface SalesStatisticsAPI {
+@RequestMapping("/sales-reports")
+interface SalesReportsAPI {
 
-    @PostMapping("/sellers")
+    @PostMapping("/sellers-results")
     fun getSellersResults(@RequestBody request: TimePeriod): SellersResultsResponse
 
-    @PostMapping("/report")
+    @PostMapping
     fun getSalesReports(@RequestBody request: TimePeriod): SalesReportDTO
 
 }
