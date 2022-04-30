@@ -1,4 +1,4 @@
-import {AppMessage} from "../stores/PopupStore";
+import {AppMessage} from "../../stores/PopupStore";
 
 export class RequestResult<T> {
 

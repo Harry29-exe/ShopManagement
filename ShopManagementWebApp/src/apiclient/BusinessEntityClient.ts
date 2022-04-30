@@ -1,7 +1,7 @@
-import {ApiConfig} from "./ApiConfig";
+import {ApiConfig} from "./config/ApiConfig";
 import {BusinessEntityDTO} from "../dto/BusinessEntityDTO";
-import {RequestResult} from "./RequestResult";
-import {Api} from "./Api";
+import {RequestResult} from "./config/RequestResult";
+import {Api} from "./config/Api";
 import {AppMessage} from "../stores/PopupStore";
 
 const apiPrefix = ApiConfig.ApiAddress + "/business-entities"

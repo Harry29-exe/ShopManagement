@@ -1,4 +1,4 @@
-import {RequestResult} from "./RequestResult";
+import {RequestResult} from "./config/RequestResult";
 import {CompanyInfoDTO} from "../dto/CompanyInfo";
 
 export class CompanyInfoClient {

@@ -1,6 +1,6 @@
-import {RequestResult} from "./RequestResult";
-import {ApiConfig} from "./ApiConfig";
-import {Api} from "./Api";
+import {RequestResult} from "./config/RequestResult";
+import {ApiConfig} from "./config/ApiConfig";
+import {Api} from "./config/Api";
 import {NewSoldItemDTO, SalesInvoiceDTO} from "../dto/SalesInvoiceDTOs";
 import {AppMessage} from "../stores/PopupStore";
 

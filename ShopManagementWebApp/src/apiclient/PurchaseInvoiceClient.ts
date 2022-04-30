@@ -1,7 +1,7 @@
-import {RequestResult} from "./RequestResult";
+import {RequestResult} from "./config/RequestResult";
 import {NewPurchasedItemDTO, PurchaseInvoiceDTO} from "../dto/PurchaseInvoiceDTOs";
-import {Api} from "./Api";
-import {ApiConfig} from "./ApiConfig";
+import {Api} from "./config/Api";
+import {ApiConfig} from "./config/ApiConfig";
 import {AppMessage} from "../stores/PopupStore";
 
 const endpointAddress = ApiConfig.ApiAddress + "/purchase-invoices"

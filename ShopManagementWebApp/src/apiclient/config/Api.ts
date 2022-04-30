@@ -1,7 +1,7 @@
-import {getCookieValue, setCookie} from "../utils/cookies";
+import {getCookieValue, setCookie} from "../../utils/cookies";
 import {ApiConfig} from "./ApiConfig";
 import {RequestResult} from "./RequestResult";
-import {AppMessage} from "../stores/PopupStore";
+import {AppMessage} from "../../stores/PopupStore";
 
 interface CsrfHeader {
     "Csrf-Auth-Token": string

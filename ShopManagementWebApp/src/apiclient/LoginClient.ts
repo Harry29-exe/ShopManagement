@@ -1,9 +1,9 @@
-import {RequestResult} from "./RequestResult";
-import {ApiConfig} from "./ApiConfig";
+import {RequestResult} from "./config/RequestResult";
+import {ApiConfig} from "./config/ApiConfig";
 import {eraseCookie, setCookie} from "../utils/cookies";
 import {AuthHolder} from "../stores/AuthStore";
 import {AppMessage} from "../stores/PopupStore";
-import {Api} from "./Api";
+import {Api} from "./config/Api";
 
 const BadCredentialsErrorMsg =  AppMessage.error("Bad credentials, please try again.")
 const UndefinedLoginErrorMsg = AppMessage.error("Something went wrong, please try again later.")
